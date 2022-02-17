@@ -6,6 +6,6 @@ export function addResources(state) {
 }
 
 function getNewChiAmount(chi) {
-  let chiToAdd = chi.chiPerSecond / GAME_LOOP_PER_SECOND;
-  return Math.min(chi.maxChi, chi.currentChi + chiToAdd);
+  let chiToAdd = chi.baseChiPerSecond / GAME_LOOP_PER_SECOND;
+  return Math.min(chi.baseMaxChi, chi.currentChi + chiToAdd);
 }

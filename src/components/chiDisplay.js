@@ -1,3 +1,4 @@
+import { calculateAdvancement } from "../backend/advancement";
 import { Canvas, drawCircle } from "../helpers";
 
 // TODO: Turn divs into React elements.
@@ -8,11 +9,34 @@ import { Canvas, drawCircle } from "../helpers";
 const CHI_ORB_RADIUS = 45;
 
 function getChiCircleRadius(props) {
-  return Math.ceil((props.chi.currentChi / props.chi.maxChi) * CHI_ORB_RADIUS);
+  return Math.ceil(
+    (props.chi.currentChi / props.chi.baseMaxChi) * CHI_ORB_RADIUS
+  );
 }
 
 function shouldShowBreakthrough(props) {
-  return props.chi.currentChi >= props.chi.maxChi;
+  return props.chi.currentChi >= props.chi.baseMaxChi;
+}
+
+function ChiNumbers(props) {
+  return (
+    <p className="chiNumbers">
+      Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.baseMaxChi)}{" "}
+      ({Math.round(props.chi.baseChiPerSecond * 100) / 100}/s)<br></br>
+      {props.advancement.stage} {props.advancement.level}
+    </p>
+  );
+}
+
+function AdvancementButton(props) {
+  return (
+    <button
+      className="breakthrough"
+      onClick={() => calculateAdvancement(props.chi, props.advancement)}
+    >
+      Advance
+    </button>
+  );
 }
 
 export function ChiDisplay(props) {
@@ -29,19 +53,12 @@ export function ChiDisplay(props) {
         />
       </div>
       <div className="chiNumbers">
-        <p className="chiNumbers">
-          Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)}{" "}
-          ({Math.round((props.chi.chiPerSecond / 100) * 100)}/s)<br></br>
-          {props.stage.stage} {props.stage.level}
-        </p>
+        <ChiNumbers chi={props.chi} advancement={props.advancement} />
       </div>
       <div className="breakthrough">
-        <button
-          className="breakthrough"
-          display={shouldShowBreakthrough(props)}
-        >
-          Advance
-        </button>
+        {shouldShowBreakthrough(props) ? (
+          <AdvancementButton chi={props.chi} advancement={props.advancement} />
+        ) : null}
       </div>
     </div>
   );

@@ -17,7 +17,10 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="chiDisplay">
-          <ChiDisplay chi={this.state.resources.chi} stage={this.state.stage} />
+          <ChiDisplay
+            chi={this.state.resources.chi}
+            advancement={this.state.advancement}
+          />
         </div>
       </div>
     );

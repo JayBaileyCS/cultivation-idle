@@ -1,6 +1,6 @@
 export let state = {
   resources: {
-    chi: { currentChi: 20, chiPerSecond: 2, maxChi: 100 },
+    chi: { currentChi: 80, baseChiPerSecond: 2, baseMaxChi: 100 },
   },
-  stage: { stage: "Foundation", level: 1 },
+  advancement: { stage: "Foundation", level: 1 },
 };
