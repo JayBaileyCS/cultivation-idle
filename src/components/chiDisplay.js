@@ -1,9 +1,18 @@
 import { Canvas, drawCircle } from "../helpers";
 
+// TODO: Turn divs into React elements.
+// TODO: Add Typescript now before it gets harder later.
+// TODO: Convert state into its own TS type
+// TODO: Add advancement support.
+
 const CHI_ORB_RADIUS = 45;
 
 function getChiCircleRadius(props) {
   return Math.ceil((props.chi.currentChi / props.chi.maxChi) * CHI_ORB_RADIUS);
+}
+
+function shouldShowBreakthrough(props) {
+  return props.chi.currentChi >= props.chi.maxChi;
 }
 
 export function ChiDisplay(props) {
@@ -21,10 +30,18 @@ export function ChiDisplay(props) {
       </div>
       <div className="chiNumbers">
         <p className="chiNumbers">
-          {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)} (
-          {Math.round((props.chi.chiPerSecond / 100) * 100)}/s)<br></br>
+          Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)}{" "}
+          ({Math.round((props.chi.chiPerSecond / 100) * 100)}/s)<br></br>
           {props.stage.stage} {props.stage.level}
         </p>
+      </div>
+      <div className="breakthrough">
+        <button
+          className="breakthrough"
+          display={shouldShowBreakthrough(props)}
+        >
+          Advance
+        </button>
       </div>
     </div>
   );
