@@ -3,35 +3,32 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { ChiDisplay } from "./components/chiDisplay";
+import { addResources } from "./backend/addResources";
+import { state } from "./backend/state";
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      chi: 80,
-      chiPerSecond: 2,
-      maxChi: 100,
-    };
+    this.state = state;
   }
 
   render() {
+    addResources(this.state);
     return (
       <div className="game">
         <div className="chiDisplay">
-          <ChiDisplay
-            chi={this.state.chi}
-            chiPerSecond={this.state.chiPerSecond}
-            maxChi={this.state.maxChi}
-          />
+          <ChiDisplay chi={this.state.resources.chi} stage={this.state.stage} />
         </div>
       </div>
     );
   }
 }
 
-ReactDOM.render(<Game />, document.getElementById("root"));
+setInterval(function () {
+  ReactDOM.render(<Game />, document.getElementById("root"));
+}, 20);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals(console.log);

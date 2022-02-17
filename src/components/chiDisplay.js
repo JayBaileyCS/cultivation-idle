@@ -1,9 +1,9 @@
 import { Canvas, drawCircle } from "../helpers";
 
-const CHI_ORB_RADIUS = 25;
+const CHI_ORB_RADIUS = 45;
 
 function getChiCircleRadius(props) {
-  return Math.ceil((props.chi / props.maxChi) * CHI_ORB_RADIUS);
+  return Math.ceil((props.chi.currentChi / props.chi.maxChi) * CHI_ORB_RADIUS);
 }
 
 export function ChiDisplay(props) {
@@ -11,17 +11,19 @@ export function ChiDisplay(props) {
     <div>
       <div className="chiOrb">
         <Canvas
-          width={80}
-          height={80}
+          width={100}
+          height={100}
           draw={(ctx) => [
-            drawCircle(ctx, 50, 50, 25, "white", "black", 2),
-            drawCircle(ctx, 50, 50, getChiCircleRadius(props), "blue"),
+            drawCircle(ctx, 50, 50, CHI_ORB_RADIUS, "white", "black", 2),
+            drawCircle(ctx, 50, 50, getChiCircleRadius(props), "silver"),
           ]}
         />
       </div>
       <div className="chiNumbers">
         <p className="chiNumbers">
-          {props.chi}/{props.maxChi} ({props.chiPerSecond}/s)
+          {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)} (
+          {Math.round((props.chi.chiPerSecond / 100) * 100)}/s)<br></br>
+          {props.stage.stage} {props.stage.level}
         </p>
       </div>
     </div>
