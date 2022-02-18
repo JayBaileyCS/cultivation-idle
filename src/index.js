@@ -22,7 +22,7 @@ class Game extends React.Component {
           <FeatureMenu advancement={this.state.advancement} />
         </div>
         <div className="mainArea">
-          <MainArea />
+          <MainArea state={this.state} />
         </div>
         <div className="chiDisplay">
           <ChiDisplay

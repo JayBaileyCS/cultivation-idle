@@ -1,3 +1,4 @@
+import { state } from "../backend/state";
 import { stageValues } from "../constants";
 
 export function FeatureMenu(props) {
@@ -5,20 +6,42 @@ export function FeatureMenu(props) {
   return (
     <div className="featureMenu">
       <div className="currentAreaButton">
-        <MenuButton text="Current Area" />
+        <MenuButton
+          text="Current Area"
+          onClick={() => swapMainArea("currentArea")}
+        />
       </div>
-      <div className="upgradeButton">
+      <div className="cultivateButton">
         {shouldShowMenuButton(props.advancement, 1, 2) ? (
-          <MenuButton text="Upgrades" />
+          <MenuButton
+            text="Cultivation"
+            onClick={() => swapMainArea("cultivation")}
+          />
         ) : (
-          <DisabledMenuButton text={createRequiresAdvancementText(1, 2)} />
+          <DisabledMenuButton
+            text={createRequiresAdvancementText(props.advancement, 1, 2)}
+          />
         )}
       </div>
       <div className="toImplementButton">
         {shouldShowMenuButton(props.advancement, 1, 3) ? (
-          <MenuButton text="Not Yet Implemented" />
+          <MenuButton
+            text="Not Yet Implemented"
+            onClick={() => swapMainArea("notYetImplemented")}
+          />
         ) : (
-          <DisabledMenuButton text={createRequiresAdvancementText(1, 3)} />
+          <DisabledMenuButton
+            text={createRequiresAdvancementText(props.advancement, 1, 3)}
+          />
+        )}
+      </div>
+      <div className="toImplementButton2">
+        {shouldShowMenuButton(props.advancement, 2, 3) ? (
+          <MenuButton text="Should Not See This" />
+        ) : (
+          <DisabledMenuButton
+            text={createRequiresAdvancementText(props.advancement, 2, 3)}
+          />
         )}
       </div>
     </div>
@@ -26,11 +49,20 @@ export function FeatureMenu(props) {
 }
 
 function MenuButton(props) {
-  return <button className="menuButton">{props.text}</button>;
+  return (
+    <button className="menuButton" onClick={props.onClick}>
+      {props.text}
+    </button>
+  );
 }
 
 function DisabledMenuButton(props) {
   return <button className="disabledMenuButton">{props.text}</button>;
+}
+
+function swapMainArea(screen) {
+  state.mainArea = screen;
+  return;
 }
 
 function shouldShowMenuButton(advancement, requiredStage, requiredLevel) {
@@ -39,6 +71,13 @@ function shouldShowMenuButton(advancement, requiredStage, requiredLevel) {
   );
 }
 
-function createRequiresAdvancementText(requiredStage, requiredLevel) {
-  return `${stageValues[requiredStage - 1].name} ${requiredLevel}`;
+function createRequiresAdvancementText(
+  advancement,
+  requiredStage,
+  requiredLevel
+) {
+  if (advancement.stage === requiredStage) {
+    return `${stageValues[requiredStage - 1].name} ${requiredLevel}`;
+  }
+  return `Unknown`;
 }
