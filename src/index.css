@@ -7,11 +7,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.gameDisplay {
+  position: absolute;
+  width: 750px;
+  height: 750px;
+}
+
 .chiDisplay {
   position: fixed;
   left: 50%;
-  top: 75%;
+  top: 600px;
   text-align: center;
+}
+
+.featureMenu {
+  position: absolute;
+  width: 150px;
+  height: 600px;
+  background-color: lightgray;
+}
+
+.menuButton {
+  color: black;
+  width: 140px;
+  align-items: center;
+}
+
+.disabledMenuButton {
+  color: lightslategray;
+  left: 5px;
+  width: 140px;
+}
+
+.mainArea {
+  position: absolute;
+  left: 150px;
+  width: 600px;
+  height: 600px;
+  background-color: lightgreen;
 }
 
 code {

@@ -1,4 +1,4 @@
-import { stages } from "../constants";
+import { stageValues } from "../constants";
 import { state } from "./state";
 
 export function calculateAdvancement(chi, advancement) {
@@ -7,7 +7,9 @@ export function calculateAdvancement(chi, advancement) {
 }
 
 function setBaseChi(newLevel) {
-  let currentStage = stages.foundation;
+  console.log(state);
+  let currentStage = stageValues[state.advancement.stage - 1];
+  console.log(currentStage);
   state.resources.chi.baseChiPerSecond =
     currentStage.baseChiPerSecond *
     currentStage.baseChiPerSecondIncrease ** (newLevel - 1);

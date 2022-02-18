@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { ChiDisplay } from "./components/chiDisplay";
+import { FeatureMenu } from "./components/featureMenu";
+import { MainArea } from "./components/mainArea/mainArea";
 import { addResources } from "./backend/addResources";
 import { state } from "./backend/state";
 
@@ -15,7 +17,13 @@ class Game extends React.Component {
   render() {
     addResources(this.state);
     return (
-      <div className="game">
+      <div className="gameDisplay">
+        <div className="featureMenu">
+          <FeatureMenu advancement={this.state.advancement} />
+        </div>
+        <div className="mainArea">
+          <MainArea />
+        </div>
         <div className="chiDisplay">
           <ChiDisplay
             chi={this.state.resources.chi}
