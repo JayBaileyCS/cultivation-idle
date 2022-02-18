@@ -9,3 +9,16 @@ export const stageValues = [
     baseMaxChiIncrease: 2,
   },
 ];
+
+export const upgradeValues = {
+  Meditation: {
+    name: "Meditation",
+    stageRequired: 1,
+    levelRequired: 2,
+    baseCostXP: 10,
+    effectText: "Chi generation",
+    tooltipFlavor:
+      "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.",
+    tooltipEffect: "Increases your total chi generation by ",
+  },
+};

@@ -27,3 +27,26 @@ export function drawCircle(ctx, x, y, radius, fill, stroke, strokeWidth) {
     ctx.stroke();
   }
 }
+
+export function drawRectangle(
+  ctx,
+  x,
+  y,
+  width,
+  height,
+  fill,
+  stroke,
+  strokeWidth
+) {
+  ctx.beginPath();
+  ctx.rect(x, y, width, height);
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.lineWidth = strokeWidth;
+    ctx.strokeStyle = stroke;
+    ctx.stroke();
+  }
+}
