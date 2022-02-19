@@ -7,6 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
 .gameDisplay {
   position: absolute;
   width: 750px;
@@ -27,16 +32,19 @@ body {
   background-color: lightgray;
 }
 
+.menuButton,
+.disabledMenuButton {
+  width: 140px;
+  margin-left: 5px;
+  align-items: center;
+}
+
 .menuButton {
   color: black;
-  width: 140px;
-  align-items: center;
 }
 
 .disabledMenuButton {
   color: lightslategray;
-  left: 5px;
-  width: 140px;
 }
 
 .mainArea {

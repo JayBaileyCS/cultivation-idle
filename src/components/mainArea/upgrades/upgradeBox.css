@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.upgradeChiCost,
+.upgradeLevelUpButton {
+  display: inline-block;
+}
+
+.upgradeBox {
+  display: block;
+  width: 200px;
+  height: 80px;
+  background-color: lightpink;
+  border: 2px solid black;
+}
+
+.upgradeInfoRow {
+  display: block;
+  height: 20px;
+}
+
+.upgradeName {
+  display: block;
+  float: left;
+}
+
+.upgradeLevel {
+  display: block;
+  float: right;
+}
+
+.upgradeBar {
+  display: inline-block;
+  top: 40px;
+  left: 5px;
+  width: 120px;
+  height: 20px;
+}

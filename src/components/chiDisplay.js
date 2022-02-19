@@ -25,7 +25,7 @@ export function ChiDisplay(props) {
       <div className="chiNumbers">
         <ChiNumbers chi={props.chi} advancement={props.advancement} />
       </div>
-      <div className="breakthrough">
+      <div className="advancementButton">
         {shouldShowAdvancement(props) ? (
           <AdvancementButton chi={props.chi} advancement={props.advancement} />
         ) : null}
@@ -37,20 +37,20 @@ export function ChiDisplay(props) {
 function getChiCircleRadius(props) {
   // Gets the radius of the filled chi orb, based on the percentage of max chi the player has.
   return Math.ceil(
-    (props.chi.currentChi / props.chi.baseMaxChi) * CHI_ORB_RADIUS
+    (props.chi.currentChi / props.chi.maxChi) * CHI_ORB_RADIUS
   );
 }
 
 function shouldShowAdvancement(props) {
   // Show the opportunity to advance stages if the player is at max chi. This is a function since we may change it later.
-  return props.chi.currentChi >= props.chi.baseMaxChi;
+  return props.chi.currentChi >= props.chi.maxChi;
 }
 
 function ChiNumbers(props) {
   return (
     <p className="chiNumbers">
-      Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.baseMaxChi)}{" "}
-      ({Math.round(props.chi.baseChiPerSecond * 100) / 100}/s)<br></br>
+      Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)}{" "}
+      ({Math.round(props.chi.chiPerSecond * 100) / 100}/s)<br></br>
       {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
     </p>
   );
@@ -59,7 +59,7 @@ function ChiNumbers(props) {
 function AdvancementButton(props) {
   return (
     <button
-      className="breakthrough"
+      className="advancementButton"
       onClick={() => calculateAdvancement(props.chi, props.advancement)}
     >
       Advance
