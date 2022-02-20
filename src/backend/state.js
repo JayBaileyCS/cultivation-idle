@@ -15,6 +15,7 @@ export let state = {
       currentLevel: 0,
       currentXPInvested: 0,
       currentXPRate: 0,
+      currentXPRateIncrease: 1.1,
       currentXPCost: 10,
       currentInvestmentLevel: 0, // TODO: Improve names.
       currentInvestmentCost: 10,

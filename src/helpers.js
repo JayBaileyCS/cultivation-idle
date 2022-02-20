@@ -39,14 +39,13 @@ export function drawRectangle(
   strokeWidth
 ) {
   ctx.beginPath();
-  ctx.rect(x, y, width, height);
   if (fill) {
     ctx.fillStyle = fill;
-    ctx.fill();
+    ctx.fillRect(x, y, width, height);
   }
   if (stroke) {
     ctx.lineWidth = strokeWidth;
     ctx.strokeStyle = stroke;
-    ctx.stroke();
+    ctx.strokeRect(x, y, width, height);
   }
 }

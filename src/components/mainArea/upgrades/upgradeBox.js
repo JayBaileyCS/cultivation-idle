@@ -53,8 +53,26 @@ function UpgradeBar(props) {
           width={UPGRADE_BAR_WIDTH}
           height={UPGRADE_BAR_HEIGHT}
           draw={(ctx) => [
-            drawRectangle(ctx, 2, 30, UPGRADE_BAR_WIDTH, 30, "white"),
-            drawRectangle(ctx, 2, 30, UPGRADE_BAR_WIDTH / 2, 30, "lightblue"),
+            drawRectangle(
+              ctx,
+              0,
+              0,
+              UPGRADE_BAR_WIDTH,
+              30,
+              "white",
+              "black",
+              2
+            ),
+            drawRectangle(
+              ctx,
+              0,
+              0,
+              getUpgradeFillBarWidth(props.currentXP, props.currentXPCost),
+              30,
+              "silver",
+              "black",
+              0
+            ),
           ]}
         />
       </div>
@@ -90,6 +108,6 @@ function increaseLevelUpRate(props) {
   }
 }
 
-function getUpgradeFillBarWidth(props) {
-  return (props.currentXP / props.levelCostXP) * UPGRADE_BAR_WIDTH;
+function getUpgradeFillBarWidth(currentXP, currentXPCost) {
+  return (currentXP / currentXPCost) * UPGRADE_BAR_WIDTH;
 }

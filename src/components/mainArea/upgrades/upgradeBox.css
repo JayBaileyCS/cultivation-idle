@@ -14,8 +14,8 @@ body {
 
 .upgradeBox {
   display: block;
-  width: 200px;
-  height: 80px;
+  width: 160px;
+  height: 110px;
   background-color: lightpink;
   border: 2px solid black;
 }
@@ -41,4 +41,8 @@ body {
   left: 5px;
   width: 120px;
   height: 20px;
+}
+
+.upgradeLevelUpButton {
+  margin-left: 3px;
 }

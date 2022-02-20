@@ -16,7 +16,12 @@ function addUpgradeXP(upgrade) {
 function levelUpUpgrade(upgrade) {
   // TODO: Un-hardcode this.
   upgrade.level += 1;
-  upgrade.currentXPCost = upgradeValues.Meditation.XPCost * (upgrade.level + 1);
+  upgrade.currentXPCost = Math.round(
+    upgrade.currentXPCost +
+      upgradeValues.Meditation.XPCost *
+        upgrade.currentXPRateIncrease ** upgrade.level
+  );
+
   upgrade.currentEffectSize =
     1 + (upgradeValues.Meditation.effectMagnitude - 1) * upgrade.level;
   upgrade.currentXPInvested = 0;
