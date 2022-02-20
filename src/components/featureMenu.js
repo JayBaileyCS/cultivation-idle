@@ -1,4 +1,4 @@
-import { state } from "../backend/state";
+import { state } from "../backend/state/state";
 import { stageValues } from "../constants";
 
 export function FeatureMenu(props) {

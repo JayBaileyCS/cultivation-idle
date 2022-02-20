@@ -1,5 +1,7 @@
-import { upgradeValues } from "../../constants";
+import { state } from "../../backend/state/state";
 import { UpgradeBox } from "./upgrades/upgradeBox";
+
+//TODO: Make a series of upgrade boxes via loop.
 
 export function MainArea(props) {
   switch (props.state.mainArea) {
@@ -8,7 +10,7 @@ export function MainArea(props) {
     case "cultivation":
       return (
         <div className="cultivation">
-          <UpgradeBox upgrade={upgradeValues.Meditation} />
+          <UpgradeBox upgrade={state.upgrades[0]} />
         </div>
       );
     default:

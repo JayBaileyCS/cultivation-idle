@@ -1,5 +1,5 @@
-import { GAME_LOOP_PER_SECOND, stageValues, upgradeValues } from "../constants";
-import { state } from "./state";
+import { GAME_LOOP_PER_SECOND, stageValues } from "../constants";
+import { state } from "./state/state";
 
 export function addResources(state) {
   let stageValue = stageValues[state.advancement.stage - 1];
@@ -14,12 +14,13 @@ function calculateChi(stageValue) {
 }
 
 function calculateChiPerSecond(stageValue) {
-  // TODO: Improve...all this.
+  // TODO: Improve [0]
+  let meditation = state.upgrades[0];
   let chiPerSecond =
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
-  if (state.upgrades.meditation.level > 0) {
-    chiPerSecond = chiPerSecond * state.upgrades.meditation.currentEffectSize;
+  if (meditation.level > 0) {
+    chiPerSecond = chiPerSecond * meditation.currentEffectSize;
   }
   return chiPerSecond;
 }

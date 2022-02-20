@@ -1,9 +1,9 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
-import { upgradeValues } from "../constants";
 
 export function addUpgrades(state) {
-  // TODO: Array
-  addUpgradeXP(state.upgrades.meditation);
+  for (let i = 0; i < state.upgrades.length; i++) {
+    addUpgradeXP(state.upgrades[i]);
+  }
 }
 
 function addUpgradeXP(upgrade) {
@@ -14,15 +14,13 @@ function addUpgradeXP(upgrade) {
 }
 
 function levelUpUpgrade(upgrade) {
-  // TODO: Un-hardcode this.
   upgrade.level += 1;
   upgrade.currentXPCost = Math.round(
     upgrade.currentXPCost +
-      upgradeValues.Meditation.XPCost *
-        upgrade.currentXPRateIncrease ** upgrade.level
+      upgrade.baseXPCost * upgrade.currentXPRateIncrease ** upgrade.level
   );
 
   upgrade.currentEffectSize =
-    1 + (upgradeValues.Meditation.effectMagnitude - 1) * upgrade.level;
+    1 + (upgrade.currentEffectMagnitude - 1) * upgrade.level;
   upgrade.currentXPInvested = 0;
 }

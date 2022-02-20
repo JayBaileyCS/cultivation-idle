@@ -1,41 +1,37 @@
 import { upgradeValues } from "../../../constants";
 import { Canvas, drawRectangle } from "../../../helpers";
-import { state } from "../../../backend/state";
+import { state } from "../../../backend/state/state";
 import "./upgradeBox.css";
 
 const UPGRADE_BAR_WIDTH = 120;
 const UPGRADE_BAR_HEIGHT = 20;
 
 export function UpgradeBox(props) {
+  let upgrade = props.upgrade;
   // Takes in an upgrade from upgrade values, and creates a box that shows the upgrade's stats to the player.
   // TODO: Figure out how to un-hardcode upgrade.
-  // TODO: Actually study some CSS properly.
-  // TODO: Move to an experience based system.
-  // TODO: Get upgrade bar to work.
   return (
     <div className="upgradeBox">
       <div className="upgradeInfoRow">
-        <div className="upgradeName">{state.upgrades.meditation.name}</div>
-        <div className="upgradeLevel">
-          Lv. {state.upgrades.meditation.level}
-        </div>
+        <div className="upgradeName">{upgrade.name}</div>
+        <div className="upgradeLevel">Lv. {upgrade.level}</div>
       </div>
       <div className="upgradeBar">
         <UpgradeBar
-          currentXP={state.upgrades.meditation.currentXPInvested}
-          currentXPCost={state.upgrades.meditation.currentXPCost}
-          currentXPRate={state.upgrades.meditation.currentXPRate}
+          currentXP={upgrade.currentXPInvested}
+          currentXPCost={upgrade.currentXPCost}
+          currentXPRate={upgrade.currentXPRate}
         />
       </div>
       <div className="upgradeChiCost">
-        Chi Cost: {Math.round(state.upgrades.meditation.currentInvestmentCost)}
+        Chi Cost: {Math.round(upgrade.currentInvestmentCost)}
       </div>
       <div className="upgradeLevelUpButton">
-        <UpgradeLevelUpButton props={state.upgrades.meditation} plus={true} />
+        <UpgradeLevelUpButton upgrade={upgrade} />
       </div>
       <div className="upgradeEffect">
-        x{Math.round(state.upgrades.meditation.currentEffectSize * 100) / 100}{" "}
-        {upgradeValues.Meditation.effectText}
+        x{Math.round(upgrade.currentEffectSize * 100) / 100}{" "}
+        {upgrade.effectText}
       </div>
     </div>
   );
@@ -93,18 +89,14 @@ function UpgradeLevelUpButton(props) {
 }
 
 function increaseLevelUpRate(props) {
-  console.log("Hi");
-  if (
-    state.resources.chi.currentChi >=
-    state.upgrades.meditation.currentInvestmentCost
-  ) {
-    state.resources.chi.currentChi -=
-      state.upgrades.meditation.currentInvestmentCost;
-    state.upgrades.meditation.currentXPRate += 1;
-    state.upgrades.meditation.currentInvestmentLevel += 1;
-    state.upgrades.meditation.currentInvestmentCost =
-      upgradeValues.Meditation.chiUpgradeCost *
-      (state.upgrades.meditation.currentInvestmentLevel + 1) ** 2;
+  console.log(props.upgrade);
+  if (state.resources.chi.currentChi >= props.upgrade.currentInvestmentCost) {
+    state.resources.chi.currentChi -= props.upgrade.currentInvestmentCost;
+    props.upgrade.currentXPRate += 1;
+    props.upgrade.currentInvestmentLevel += 1;
+    props.upgrade.currentInvestmentCost =
+      props.upgrade.baseInvestmentCost *
+      (props.upgrade.currentInvestmentLevel + 1) ** 2;
   }
 }
 

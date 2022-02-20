@@ -6,8 +6,9 @@ import { ChiDisplay } from "./components/chiDisplay";
 import { FeatureMenu } from "./components/featureMenu";
 import { MainArea } from "./components/mainArea/mainArea";
 import { addResources } from "./backend/addResources";
-import { state } from "./backend/state";
-import { addUpgrades } from "./backend/addUpgradeXP";
+import { state } from "./backend/state/state";
+import { addUpgrades } from "./backend/addUpgrades";
+import { GAME_LOOP_PER_SECOND } from "./constants";
 
 class Game extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class Game extends React.Component {
 
 setInterval(function () {
   ReactDOM.render(<Game />, document.getElementById("root"));
-}, 20);
+}, 1000 / GAME_LOOP_PER_SECOND);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

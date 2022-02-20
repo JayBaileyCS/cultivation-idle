@@ -1,4 +1,4 @@
-import { state } from "./state";
+import { state } from "./state/state";
 
 export function calculateAdvancement(chi, advancement) {
   state.advancement.level = advancement.level + 1;
