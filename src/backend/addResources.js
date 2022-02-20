@@ -1,5 +1,6 @@
 import { GAME_LOOP_PER_SECOND, stageValues } from "../constants";
 import { state } from "./state/state";
+import { meditationUpgrade } from "./state/upgrades";
 
 export function addResources(state) {
   let stageValue = stageValues[state.advancement.stage - 1];
@@ -14,8 +15,7 @@ function calculateChi(stageValue) {
 }
 
 function calculateChiPerSecond(stageValue) {
-  // TODO: Improve [0]
-  let meditation = state.upgrades[0];
+  let meditation = state.upgrades[meditationUpgrade.index];
   let chiPerSecond =
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);

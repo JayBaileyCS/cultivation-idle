@@ -4,7 +4,6 @@ import { stageValues } from "../constants";
 
 // TODO: Add Typescript now before it gets harder later.
 // TODO: Convert state into its own TS type
-// TODO: Add breakthrough? Leave for second stage, perhaps?
 
 const CHI_ORB_RADIUS = 45;
 
@@ -28,7 +27,9 @@ export function ChiDisplay(props) {
       <div className="advancementButton">
         {shouldShowAdvancement(props) ? (
           <AdvancementButton chi={props.chi} advancement={props.advancement} />
-        ) : null}
+        ) : (
+          <DisabledAdvancementButton chi={props.chi} />
+        )}
       </div>
     </div>
   );
@@ -36,9 +37,7 @@ export function ChiDisplay(props) {
 
 function getChiCircleRadius(props) {
   // Gets the radius of the filled chi orb, based on the percentage of max chi the player has.
-  return Math.ceil(
-    (props.chi.currentChi / props.chi.maxChi) * CHI_ORB_RADIUS
-  );
+  return Math.ceil((props.chi.currentChi / props.chi.maxChi) * CHI_ORB_RADIUS);
 }
 
 function shouldShowAdvancement(props) {
@@ -49,8 +48,8 @@ function shouldShowAdvancement(props) {
 function ChiNumbers(props) {
   return (
     <p className="chiNumbers">
-      Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)}{" "}
-      ({Math.round(props.chi.chiPerSecond * 100) / 100}/s)<br></br>
+      Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)} (
+      {Math.round(props.chi.chiPerSecond * 100) / 100}/s)<br></br>
       {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
     </p>
   );
@@ -60,9 +59,17 @@ function AdvancementButton(props) {
   return (
     <button
       className="advancementButton"
-      onClick={() => calculateAdvancement(props.chi, props.advancement)}
+      onClick={() => calculateAdvancement(props.advancement)}
     >
       Advance
+    </button>
+  );
+}
+
+function DisabledAdvancementButton(props) {
+  return (
+    <button className="disabledAdvancementButton">
+      {props.chi.maxChi} chi to advance
     </button>
   );
 }

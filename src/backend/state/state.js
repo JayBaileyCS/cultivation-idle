@@ -1,6 +1,6 @@
-//TODO: How to stop this becoming impossibly sprawling?
 import { meditationUpgrade } from "./upgrades";
 
+//TODO: Should we change state management?
 export let state = {
   resources: {
     chi: { currentChi: 80, chiPerSecond: 2, maxChi: 100 },

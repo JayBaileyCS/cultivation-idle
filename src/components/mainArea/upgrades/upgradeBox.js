@@ -1,4 +1,3 @@
-import { upgradeValues } from "../../../constants";
 import { Canvas, drawRectangle } from "../../../helpers";
 import { state } from "../../../backend/state/state";
 import "./upgradeBox.css";
@@ -9,7 +8,6 @@ const UPGRADE_BAR_HEIGHT = 20;
 export function UpgradeBox(props) {
   let upgrade = props.upgrade;
   // Takes in an upgrade from upgrade values, and creates a box that shows the upgrade's stats to the player.
-  // TODO: Figure out how to un-hardcode upgrade.
   return (
     <div className="upgradeBox">
       <div className="upgradeInfoRow">
@@ -27,7 +25,12 @@ export function UpgradeBox(props) {
         Chi Cost: {Math.round(upgrade.currentInvestmentCost)}
       </div>
       <div className="upgradeLevelUpButton">
-        <UpgradeLevelUpButton upgrade={upgrade} />
+        {state.resources.chi.currentChi >=
+        props.upgrade.currentInvestmentCost ? (
+          <UpgradeLevelUpButton upgrade={upgrade} />
+        ) : (
+          <DisabledUpgradeLevelUpButton />
+        )}
       </div>
       <div className="upgradeEffect">
         x{Math.round(upgrade.currentEffectSize * 100) / 100}{" "}
@@ -77,7 +80,6 @@ function UpgradeBar(props) {
 }
 
 function UpgradeLevelUpButton(props) {
-  //TODO: Add functionality, dimming if not enough chi.
   return (
     <button
       className="upgradeLevelUpButton"
@@ -88,16 +90,17 @@ function UpgradeLevelUpButton(props) {
   );
 }
 
+function DisabledUpgradeLevelUpButton(props) {
+  return <button className="disabledUpgradeLevelUpButton">{"+"}</button>;
+}
+
 function increaseLevelUpRate(props) {
-  console.log(props.upgrade);
-  if (state.resources.chi.currentChi >= props.upgrade.currentInvestmentCost) {
-    state.resources.chi.currentChi -= props.upgrade.currentInvestmentCost;
-    props.upgrade.currentXPRate += 1;
-    props.upgrade.currentInvestmentLevel += 1;
-    props.upgrade.currentInvestmentCost =
-      props.upgrade.baseInvestmentCost *
-      (props.upgrade.currentInvestmentLevel + 1) ** 2;
-  }
+  state.resources.chi.currentChi -= props.upgrade.currentInvestmentCost;
+  props.upgrade.currentXPRate += 1;
+  props.upgrade.currentInvestmentLevel += 1;
+  props.upgrade.currentInvestmentCost =
+    props.upgrade.baseInvestmentCost *
+    (props.upgrade.currentInvestmentLevel + 1) ** 2;
 }
 
 function getUpgradeFillBarWidth(currentXP, currentXPCost) {

@@ -39,11 +39,13 @@ button {
   align-items: center;
 }
 
-.menuButton {
+.menuButton,
+.advancementButton {
   color: black;
 }
 
-.disabledMenuButton {
+.disabledMenuButton,
+.disabledAdvancementButton {
   color: lightslategray;
 }
 
