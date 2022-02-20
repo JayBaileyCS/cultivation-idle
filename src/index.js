@@ -7,6 +7,7 @@ import { FeatureMenu } from "./components/featureMenu";
 import { MainArea } from "./components/mainArea/mainArea";
 import { addResources } from "./backend/addResources";
 import { state } from "./backend/state";
+import { addUpgrades } from "./backend/addUpgradeXP";
 
 class Game extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Game extends React.Component {
 
   render() {
     addResources(this.state);
+    addUpgrades(this.state);
     return (
       <div className="gameDisplay">
         <div className="featureMenu">

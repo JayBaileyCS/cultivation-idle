@@ -19,10 +19,7 @@ function calculateChiPerSecond(stageValue) {
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
   if (state.upgrades.meditation.level > 0) {
-    chiPerSecond =
-      chiPerSecond *
-      upgradeValues.Meditation.effectMagnitude **
-        state.upgrades.meditation.level;
+    chiPerSecond = chiPerSecond * state.upgrades.meditation.currentEffectSize;
   }
   return chiPerSecond;
 }

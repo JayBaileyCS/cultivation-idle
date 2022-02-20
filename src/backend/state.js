@@ -14,6 +14,10 @@ export let state = {
       level: 0,
       currentLevel: 0,
       currentXPInvested: 0,
+      currentXPRate: 0,
+      currentXPCost: 10,
+      currentInvestmentLevel: 0, // TODO: Improve names.
+      currentInvestmentCost: 10,
       upgradeCost: upgradeValues.Meditation.upgradeCost,
       currentEffectSize: 1,
     },

@@ -15,7 +15,8 @@ export const upgradeValues = {
     name: "Meditation",
     stageRequired: 1,
     levelRequired: 2,
-    upgradeCost: 10,
+    XPCost: 10,
+    chiUpgradeCost: 10,
     effectMagnitude: 1.1,
     effectText: "Chi generation",
     tooltipFlavor:

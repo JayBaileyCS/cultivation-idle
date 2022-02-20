@@ -10,6 +10,8 @@ export function UpgradeBox(props) {
   // Takes in an upgrade from upgrade values, and creates a box that shows the upgrade's stats to the player.
   // TODO: Figure out how to un-hardcode upgrade.
   // TODO: Actually study some CSS properly.
+  // TODO: Move to an experience based system.
+  // TODO: Get upgrade bar to work.
   return (
     <div className="upgradeBox">
       <div className="upgradeInfoRow">
@@ -21,11 +23,12 @@ export function UpgradeBox(props) {
       <div className="upgradeBar">
         <UpgradeBar
           currentXP={state.upgrades.meditation.currentXPInvested}
-          levelCostXP={state.upgrades.meditation.levelCostXP}
+          currentXPCost={state.upgrades.meditation.currentXPCost}
+          currentXPRate={state.upgrades.meditation.currentXPRate}
         />
       </div>
       <div className="upgradeChiCost">
-        Chi Cost: {Math.round(state.upgrades.meditation.upgradeCost)}
+        Chi Cost: {Math.round(state.upgrades.meditation.currentInvestmentCost)}
       </div>
       <div className="upgradeLevelUpButton">
         <UpgradeLevelUpButton props={state.upgrades.meditation} plus={true} />
@@ -42,7 +45,8 @@ function UpgradeBar(props) {
   return (
     <div>
       <div className="upgradeBarText">
-        {Math.round(props.currentXP)} / {Math.round(props.levelCostXP)}
+        {Math.round(props.currentXP)} / {Math.round(props.currentXPCost)} (
+        {props.currentXPRate}/s)
       </div>
       <div className="upgradeBarRectangle">
         <Canvas
@@ -63,23 +67,26 @@ function UpgradeLevelUpButton(props) {
   return (
     <button
       className="upgradeLevelUpButton"
-      onClick={() => levelUpUpgrade(props)}
+      onClick={() => increaseLevelUpRate(props)}
     >
       {"+"}
     </button>
   );
 }
 
-function levelUpUpgrade(upgrade) {
-  if (state.resources.chi.currentChi >= state.upgrades.meditation.upgradeCost) {
-    state.resources.chi.currentChi -= state.upgrades.meditation.upgradeCost;
-    state.upgrades.meditation.level += 1;
-    state.upgrades.meditation.upgradeCost =
-      upgradeValues.Meditation.upgradeCost *
-      (state.upgrades.meditation.level + 1) ** 2;
-    state.upgrades.meditation.currentEffectSize =
-      upgradeValues.Meditation.effectMagnitude **
-      state.upgrades.meditation.level;
+function increaseLevelUpRate(props) {
+  console.log("Hi");
+  if (
+    state.resources.chi.currentChi >=
+    state.upgrades.meditation.currentInvestmentCost
+  ) {
+    state.resources.chi.currentChi -=
+      state.upgrades.meditation.currentInvestmentCost;
+    state.upgrades.meditation.currentXPRate += 1;
+    state.upgrades.meditation.currentInvestmentLevel += 1;
+    state.upgrades.meditation.currentInvestmentCost =
+      upgradeValues.Meditation.chiUpgradeCost *
+      (state.upgrades.meditation.currentInvestmentLevel + 1) ** 2;
   }
 }
 
