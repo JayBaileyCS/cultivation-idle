@@ -1,4 +1,4 @@
-import { meditationUpgrade } from "./upgrades";
+import { learningUpgrade, meditationUpgrade } from "./upgrades";
 
 //TODO: Should we change state management?
 export let state = {
@@ -7,5 +7,5 @@ export let state = {
   },
   advancement: { stage: 1, level: 1 },
   mainArea: "currentArea",
-  upgrades: [meditationUpgrade],
+  upgrades: [meditationUpgrade, learningUpgrade],
 };

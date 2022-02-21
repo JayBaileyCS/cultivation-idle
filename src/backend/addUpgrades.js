@@ -17,7 +17,7 @@ function levelUpUpgrade(upgrade) {
   upgrade.level += 1;
   upgrade.currentXPCost = Math.round(
     upgrade.currentXPCost +
-      upgrade.baseXPCost * upgrade.currentXPRateIncrease ** upgrade.level
+      upgrade.baseXPCost * upgrade.currentXPCostIncrease ** upgrade.level
   );
 
   upgrade.currentEffectSize =

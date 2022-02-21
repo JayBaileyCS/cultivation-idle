@@ -1,5 +1,9 @@
 import { state } from "../../backend/state/state";
-import { UpgradeBox } from "./upgrades/upgradeBox";
+import {
+  UpgradeBox,
+  isUnlocked,
+  DisabledUpgradeBox,
+} from "./upgrades/upgradeBox";
 
 //TODO: Make a series of upgrade boxes via loop.
 
@@ -8,10 +12,12 @@ export function MainArea(props) {
     case "currentArea":
       return <div className="currentArea">Current Area</div>;
     case "cultivation":
-      return (
-        <div className="cultivation">
-          <UpgradeBox upgrade={state.upgrades[0]} />
-        </div>
+      return state.upgrades.map((upgrade) =>
+        isUnlocked(upgrade) ? (
+          <UpgradeBox key={upgrade.name} upgrade={upgrade} />
+        ) : (
+          <DisabledUpgradeBox key={upgrade.name} upgrade={upgrade} />
+        )
       );
     default:
       return <div className="shouldNotSee">Should Not See</div>;
