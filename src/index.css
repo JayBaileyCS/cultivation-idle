@@ -25,6 +25,11 @@ button {
   text-align: center;
 }
 
+.chiNumbers {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .featureMenu {
   position: absolute;
   width: 150px;

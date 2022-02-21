@@ -67,9 +67,5 @@ function AdvancementButton(props) {
 }
 
 function DisabledAdvancementButton(props) {
-  return (
-    <button className="disabledAdvancementButton">
-      {props.chi.maxChi} chi to advance
-    </button>
-  );
+  return <button className="disabledAdvancementButton">Advance</button>;
 }

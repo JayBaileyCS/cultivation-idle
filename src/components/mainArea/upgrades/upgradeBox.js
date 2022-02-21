@@ -8,7 +8,7 @@ const UPGRADE_BAR_HEIGHT = 20;
 
 export function UpgradeBox(props) {
   // Takes in an upgrade from upgrade values, and creates a box that shows the upgrade's stats to the player.
-  // TODO: Add in disabled option.
+  // TODO: Add CSS for disabled option.
   let upgrade = props.upgrade;
   return (
     <div className={"upgradeBox"} title={upgrade.tooltipFlavor}>
@@ -84,7 +84,7 @@ export function DisabledUpgradeBox(props) {
   let upgrade = props.upgrade;
   return (
     <div className="disabledUpgradeBox">
-      Requires {stageValues[upgrade.stageRequired - 1].name}{" "}
+      {stageValues[upgrade.stageRequired - 1].name}{" "}
       {upgrade.advancementLevelRequired}
     </div>
   );
@@ -106,13 +106,11 @@ function DisabledUpgradeLevelUpButton(props) {
 }
 
 function increaseLevelUpRate(props) {
-  console.log(props);
   state.resources.chi.currentChi -= props.upgrade.currentInvestmentCost;
   props.upgrade.currentInvestmentLevel += 1;
   props.upgrade.currentInvestmentCost =
     props.upgrade.baseInvestmentCost *
     (props.upgrade.currentInvestmentLevel + 1) ** 2;
-  console.log(props);
 }
 
 function getUpgradeFillBarWidth(currentXP, currentXPCost) {

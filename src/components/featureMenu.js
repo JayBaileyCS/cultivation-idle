@@ -24,14 +24,14 @@ export function FeatureMenu(props) {
         )}
       </div>
       <div className="toImplementButton">
-        {shouldShowMenuButton(props.advancement, 1, 3) ? (
+        {shouldShowMenuButton(props.advancement, 1, 4) ? (
           <MenuButton
             text="Not Yet Implemented"
-            onClick={() => swapMainArea("notYetImplemented")}
+            onClick={() => swapMainArea("featureThree")}
           />
         ) : (
           <DisabledMenuButton
-            text={createRequiresAdvancementText(props.advancement, 1, 3)}
+            text={createRequiresAdvancementText(props.advancement, 1, 4)}
           />
         )}
       </div>

@@ -5,9 +5,8 @@ import {
   DisabledUpgradeBox,
 } from "./upgrades/upgradeBox";
 
-//TODO: Make a series of upgrade boxes via loop.
-
 export function MainArea(props) {
+  // TODO: Add CSS for cultivation case.
   switch (props.state.mainArea) {
     case "currentArea":
       return <div className="currentArea">Current Area</div>;
@@ -19,6 +18,8 @@ export function MainArea(props) {
           <DisabledUpgradeBox key={upgrade.name} upgrade={upgrade} />
         )
       );
+    case "featureThree":
+      return <div className="featureThree">Implement Later</div>;
     default:
       return <div className="shouldNotSee">Should Not See</div>;
   }

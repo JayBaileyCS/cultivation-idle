@@ -18,7 +18,6 @@ export const meditationUpgrade = {
   effectText: "Chi generation",
   tooltipFlavor:
     "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.",
-  tooltipEffect: "Increases your total chi generation by ",
 };
 
 export const learningUpgrade = {
@@ -41,5 +40,27 @@ export const learningUpgrade = {
   effectText: "XP generation",
   tooltipFlavor:
     "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.",
-  tooltipEffect: "Increases your total XP generation by ",
+};
+
+export const connectionUpgrade = {
+  // TODO: Add code to change 1.1x Chi Cost Reduction to 0.909x Upgrade Cost.
+  name: "Connection",
+  index: 2,
+  stageRequired: 1,
+  advancementLevelRequired: 4,
+  level: 0,
+  currentXPInvested: 0,
+  baseXPRate: 1,
+  currentXPRate: 0,
+  currentXPCostIncrease: 1.15,
+  currentXPCost: 25,
+  baseXPCost: 10,
+  currentInvestmentLevel: 0,
+  currentInvestmentCost: 25,
+  baseInvestmentCost: 25,
+  currentEffectSize: 1,
+  currentEffectMagnitude: 1.05,
+  effectText: "Chi Cost Reduction",
+  tooltipFlavor:
+    'The great swordsman Miyamuto Musashi once said "To know one thing is to know ten thousand things." By making connections between disparate insights, you make it easier to continue to advance in your cultivation.',
 };
