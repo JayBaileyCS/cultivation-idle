@@ -15,7 +15,6 @@ let cultivation = () =>
   );
 
 export function MainArea(props) {
-  // TODO: Add CSS for cultivation case.
   switch (props.state.mainArea) {
     case "currentArea":
       return (
