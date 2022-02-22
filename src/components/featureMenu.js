@@ -1,5 +1,9 @@
 import { state } from "../backend/state/state";
-import { stageValues } from "../constants";
+import { stageValues, NOT_YET_UNLOCKED_TOOLTIP } from "../constants";
+
+const CURRENT_AREA_TOOLTIP = "Explore the current area.";
+const CULTIVATION_TOOLTIP = "Improve your cultivation.";
+const FEATURE_THREE_TOOLTIP = "This feature is not yet implemented.";
 
 export function FeatureMenu(props) {
   // Shows the possible features in the upper-left as a series of buttons.
@@ -8,6 +12,7 @@ export function FeatureMenu(props) {
       <div className="currentAreaButton">
         <MenuButton
           text="Current Area"
+          title={CURRENT_AREA_TOOLTIP}
           onClick={() => swapMainArea("currentArea")}
         />
       </div>
@@ -15,6 +20,7 @@ export function FeatureMenu(props) {
         {shouldShowMenuButton(props.advancement, 1, 2) ? (
           <MenuButton
             text="Cultivation"
+            title={CULTIVATION_TOOLTIP}
             onClick={() => swapMainArea("cultivation")}
           />
         ) : (
@@ -27,6 +33,7 @@ export function FeatureMenu(props) {
         {shouldShowMenuButton(props.advancement, 1, 4) ? (
           <MenuButton
             text="Not Yet Implemented"
+            title={FEATURE_THREE_TOOLTIP}
             onClick={() => swapMainArea("featureThree")}
           />
         ) : (
@@ -50,14 +57,18 @@ export function FeatureMenu(props) {
 
 function MenuButton(props) {
   return (
-    <button className="menuButton" onClick={props.onClick}>
+    <button className="menuButton" onClick={props.onClick} title={props.title}>
       {props.text}
     </button>
   );
 }
 
 function DisabledMenuButton(props) {
-  return <button className="disabledMenuButton">{props.text}</button>;
+  return (
+    <button className="disabledMenuButton" title={NOT_YET_UNLOCKED_TOOLTIP}>
+      {props.text}
+    </button>
+  );
 }
 
 function swapMainArea(screen) {

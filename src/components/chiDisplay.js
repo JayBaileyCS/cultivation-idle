@@ -2,13 +2,13 @@ import { calculateAdvancement } from "../backend/advancement";
 import { Canvas, drawCircle } from "../helpers";
 import { stageValues } from "../constants";
 
-// TODO: Add Typescript now before it gets harder later.
-// TODO: Convert state into its own TS type
-
 const CHI_ORB_RADIUS = 45;
+const ADVANCEMENT_TOOLTIP =
+  "Consumes all of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
 
 export function ChiDisplay(props) {
   // Displays chi orb, current chi, max chi, chi generation rate, and current stage + level of advancement.
+  //TODO: Add leading zeroes, like 2.00/s
   return (
     <div>
       <div className="chiOrb">
@@ -59,6 +59,7 @@ function AdvancementButton(props) {
   return (
     <button
       className="advancementButton"
+      title={ADVANCEMENT_TOOLTIP}
       onClick={() => calculateAdvancement(props.advancement)}
     >
       Advance
@@ -67,5 +68,9 @@ function AdvancementButton(props) {
 }
 
 function DisabledAdvancementButton(props) {
-  return <button className="disabledAdvancementButton">Advance</button>;
+  return (
+    <button className="disabledAdvancementButton" title={ADVANCEMENT_TOOLTIP}>
+      Advance
+    </button>
+  );
 }

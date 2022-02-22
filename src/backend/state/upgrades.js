@@ -17,7 +17,7 @@ export const meditationUpgrade = {
   currentEffectMagnitude: 1.1,
   effectText: "Chi generation",
   tooltipFlavor:
-    "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.",
+    "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.\n\nAdvances chi generation by 10% per level.",
 };
 
 export const learningUpgrade = {
@@ -39,7 +39,7 @@ export const learningUpgrade = {
   currentEffectMagnitude: 1.1,
   effectText: "XP generation",
   tooltipFlavor:
-    "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.",
+    "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.\n\nIncreases XP generation by 10% per level.",
 };
 
 export const connectionUpgrade = {
@@ -54,7 +54,7 @@ export const connectionUpgrade = {
   currentXPRate: 0,
   currentXPCostIncrease: 1.15,
   currentXPCost: 25,
-  baseXPCost: 10,
+  baseXPCost: 25,
   currentInvestmentLevel: 0,
   currentInvestmentCost: 25,
   baseInvestmentCost: 25,
@@ -62,5 +62,27 @@ export const connectionUpgrade = {
   currentEffectMagnitude: 1.05,
   effectText: "Chi Cost Reduction",
   tooltipFlavor:
-    'The great swordsman Miyamuto Musashi once said "To know one thing is to know ten thousand things." By making connections between disparate insights, you make it easier to continue to advance in your cultivation.',
+    'The great swordsman Miyamuto Musashi once said "To know one thing is to know ten thousand things." By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 5% (multiplicative) per level.',
+};
+
+export const amplificationUpgrade = {
+  name: "Amplification",
+  index: 3,
+  stageRequired: 1,
+  advancementLevelRequired: 5,
+  level: 0,
+  currentXPInvested: 0,
+  baseXPRate: 1,
+  currentXPRate: 0,
+  currentXPCostIncrease: 1.1,
+  currentXPCost: 50,
+  baseXPCost: 50,
+  currentInvestmentLevel: 0,
+  currentInvestmentCost: 50,
+  baseInvestmentCost: 50,
+  currentEffectSize: 1,
+  currentEffectMagnitude: 1.1,
+  effectText: "Chi generation",
+  tooltipFlavor:
+    "By cycling your existing chi through your meridians, you harness and amplify its power.\n\nIncreases chi generation by up to 10% per level based on your current percentage of maximum chi.",
 };

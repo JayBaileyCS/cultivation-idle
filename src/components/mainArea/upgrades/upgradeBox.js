@@ -1,6 +1,7 @@
 import { Canvas, drawRectangle } from "../../../helpers";
 import { state } from "../../../backend/state/state";
-import { stageValues } from "../../../constants";
+import { stageValues, NOT_YET_UNLOCKED_TOOLTIP } from "../../../constants";
+import { levelUpUpgrade } from "../../../backend/addUpgrades";
 import "./upgradeBox.css";
 
 const UPGRADE_BAR_WIDTH = 120;
@@ -83,7 +84,7 @@ function UpgradeBar(props) {
 export function DisabledUpgradeBox(props) {
   let upgrade = props.upgrade;
   return (
-    <div className="disabledUpgradeBox">
+    <div className="disabledUpgradeBox" title={NOT_YET_UNLOCKED_TOOLTIP}>
       {stageValues[upgrade.stageRequired - 1].name}{" "}
       {upgrade.advancementLevelRequired}
     </div>
@@ -111,6 +112,9 @@ function increaseLevelUpRate(props) {
   props.upgrade.currentInvestmentCost =
     props.upgrade.baseInvestmentCost *
     (props.upgrade.currentInvestmentLevel + 1) ** 2;
+  if (props.upgrade.level === 0) {
+    levelUpUpgrade(props.upgrade);
+  }
 }
 
 function getUpgradeFillBarWidth(currentXP, currentXPCost) {

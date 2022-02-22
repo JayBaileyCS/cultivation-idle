@@ -1,6 +1,10 @@
 import { GAME_LOOP_PER_SECOND, stageValues } from "../constants";
 import { state } from "./state/state";
-import { learningUpgrade, meditationUpgrade } from "./state/upgrades";
+import {
+  amplificationUpgrade,
+  learningUpgrade,
+  meditationUpgrade,
+} from "./state/upgrades";
 
 export function addResources(state) {
   let stageValue = stageValues[state.advancement.stage - 1];
@@ -18,13 +22,25 @@ function calculateChi(stageValue) {
 
 function calculateChiPerSecond(stageValue) {
   let meditation = state.upgrades[meditationUpgrade.index];
+  let amplification = state.upgrades[amplificationUpgrade.index];
   let chiPerSecond =
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
   if (meditation.level > 0) {
     chiPerSecond = chiPerSecond * meditation.currentEffectSize;
   }
+  if (amplification.level > 0) {
+    calculateAmplificationMagnitude(amplification);
+    chiPerSecond = chiPerSecond * amplification.currentEffectSize;
+  }
   return chiPerSecond;
+}
+
+function calculateAmplificationMagnitude(amplification) {
+  let chiRatio = state.resources.chi.currentChi / state.resources.chi.maxChi;
+  let currentMagnitude =
+    1 + (amplification.currentEffectMagnitude - 1) * amplification.level;
+  amplification.currentEffectSize = 1 + (currentMagnitude - 1) * chiRatio;
 }
 
 function calculateMaxChi(stageValue) {

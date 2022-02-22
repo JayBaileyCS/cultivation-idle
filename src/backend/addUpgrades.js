@@ -29,14 +29,16 @@ function calculateUpgradeCost(upgrade, connection) {
     currentInvestmentCost * (1 / connectionMagnitude);
 }
 
-function levelUpUpgrade(upgrade) {
+export function levelUpUpgrade(upgrade) {
   upgrade.level += 1;
-  upgrade.currentXPCost = Math.round(
-    upgrade.currentXPCost +
-      upgrade.baseXPCost * upgrade.currentXPCostIncrease ** upgrade.level
-  );
+  if (upgrade.level > 1) {
+    upgrade.currentXPCost = Math.round(
+      upgrade.currentXPCost +
+        upgrade.baseXPCost *
+          upgrade.currentXPCostIncrease ** (upgrade.level - 1)
+    );
+  }
   upgrade.currentEffectSize =
     1 + (upgrade.currentEffectMagnitude - 1) * upgrade.level;
   upgrade.currentXPInvested = 0;
-  console.log(upgrade);
 }
