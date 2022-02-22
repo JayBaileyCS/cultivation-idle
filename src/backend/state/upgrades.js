@@ -16,7 +16,7 @@ export const meditationUpgrade = {
   currentEffectSize: 1,
   currentEffectMagnitude: 1.1,
   shouldReverse: false,
-  effectText: "Chi generation",
+  effectText: "Chi Generation",
   tooltipFlavor:
     "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.\n\nAdvances chi generation by 10% per level.",
 };
@@ -39,13 +39,13 @@ export const learningUpgrade = {
   currentEffectSize: 1,
   currentEffectMagnitude: 1.1,
   shouldReverse: false,
-  effectText: "XP generation",
+  effectText: "XP Generation",
   tooltipFlavor:
     "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.\n\nIncreases XP generation by 10% per level.",
 };
 
-export const connectionUpgrade = {
-  name: "Connection",
+export const insightUpgrade = {
+  name: "Insight",
   index: 2,
   stageRequired: 1,
   advancementLevelRequired: 4,
@@ -85,7 +85,7 @@ export const amplificationUpgrade = {
   currentEffectSize: 1,
   currentEffectMagnitude: 1.1,
   shouldReverse: false,
-  effectText: "Chi generation",
+  effectText: "Chi Generation",
   tooltipFlavor:
     "By cycling your existing chi through your meridians, you harness and amplify its power.\n\nIncreases chi generation by up to 10% per level based on your current percentage of maximum chi.",
 };

@@ -1,8 +1,8 @@
 import {
-  connectionUpgrade,
   amplificationUpgrade,
   learningUpgrade,
   meditationUpgrade,
+  insightUpgrade,
 } from "./upgrades";
 
 export let state = {
@@ -14,7 +14,7 @@ export let state = {
   upgrades: [
     meditationUpgrade,
     learningUpgrade,
-    connectionUpgrade,
+    insightUpgrade,
     amplificationUpgrade,
   ],
 };

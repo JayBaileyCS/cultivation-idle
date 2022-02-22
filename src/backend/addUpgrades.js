@@ -1,12 +1,12 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
-import { connectionUpgrade } from "./state/upgrades";
+import { insightUpgrade } from "./state/upgrades";
 
 export function addUpgrades(state) {
   for (let i = 0; i < state.upgrades.length; i++) {
     addUpgradeXP(state.upgrades[i]);
     calculateUpgradeCost(
       state.upgrades[i],
-      state.upgrades[connectionUpgrade.index]
+      state.upgrades[insightUpgrade.index]
     );
   }
 }
@@ -18,15 +18,13 @@ function addUpgradeXP(upgrade) {
   }
 }
 
-function calculateUpgradeCost(upgrade, connection) {
+function calculateUpgradeCost(upgrade, insight) {
   let currentInvestmentCost =
     upgrade.baseInvestmentCost * (upgrade.currentInvestmentLevel + 1) ** 2;
-  let connectionMagnitude =
-    connection.level > 0
-      ? connection.currentEffectMagnitude ** connection.level
-      : 1;
+  let insightMagnitude =
+    insight.level > 0 ? insight.currentEffectMagnitude ** insight.level : 1;
   upgrade.currentInvestmentCost =
-    currentInvestmentCost * (1 / connectionMagnitude);
+    currentInvestmentCost * (1 / insightMagnitude);
 }
 
 export function levelUpUpgrade(upgrade) {
