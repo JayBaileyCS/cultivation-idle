@@ -40,5 +40,8 @@ export function levelUpUpgrade(upgrade) {
   }
   upgrade.currentEffectSize =
     1 + (upgrade.currentEffectMagnitude - 1) * upgrade.level;
+  if (upgrade.shouldReverse === true) {
+    upgrade.currentEffectSize = 1 / upgrade.currentEffectSize;
+  }
   upgrade.currentXPInvested = 0;
 }

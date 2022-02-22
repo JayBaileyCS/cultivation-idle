@@ -14,19 +14,12 @@ body {
 
 .upgradeBox,
 .disabledUpgradeBox {
-  display: block;
+  display: inline-block;
   width: 160px;
   height: 110px;
   background-color: lightpink;
   border: 2px solid black;
-}
-
-.disabledUpgradeBox {
-  line-height: 100px;
-  opacity: 0.25;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
+  margin: 10px;
 }
 
 .upgradeInfoRow {

@@ -5,7 +5,6 @@ import {
   meditationUpgrade,
 } from "./upgrades";
 
-//TODO: Add real React state management?
 export let state = {
   resources: {
     chi: { currentChi: 80, chiPerSecond: 2, maxChi: 100 },

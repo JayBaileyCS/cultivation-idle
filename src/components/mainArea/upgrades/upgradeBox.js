@@ -9,10 +9,9 @@ const UPGRADE_BAR_HEIGHT = 20;
 
 export function UpgradeBox(props) {
   // Takes in an upgrade from upgrade values, and creates a box that shows the upgrade's stats to the player.
-  // TODO: Add CSS for disabled option.
   let upgrade = props.upgrade;
   return (
-    <div className={"upgradeBox"} title={upgrade.tooltipFlavor}>
+    <div className="upgradeBox" title={upgrade.tooltipFlavor}>
       <div className="upgradeInfoRow">
         <div className="upgradeName">{upgrade.name}</div>
         <div className="upgradeLevel">Lv. {upgrade.level}</div>
@@ -46,8 +45,8 @@ function UpgradeBar(props) {
   return (
     <div>
       <div className="upgradeBarText">
-        {Math.round(props.currentXP)} / {Math.round(props.currentXPCost)} (
-        {Math.round(props.currentXPRate * 100) / 100}/s)
+        {Math.floor(props.currentXP)} / {Math.floor(props.currentXPCost)} (
+        {Math.floor(props.currentXPRate * 100) / 100}/s)
       </div>
       <div className="upgradeBarRectangle">
         <Canvas
@@ -85,8 +84,10 @@ export function DisabledUpgradeBox(props) {
   let upgrade = props.upgrade;
   return (
     <div className="disabledUpgradeBox" title={NOT_YET_UNLOCKED_TOOLTIP}>
-      {stageValues[upgrade.stageRequired - 1].name}{" "}
-      {upgrade.advancementLevelRequired}
+      <div className="disabledUpgradeText">
+        {stageValues[upgrade.stageRequired - 1].name}{" "}
+        {upgrade.advancementLevelRequired}
+      </div>
     </div>
   );
 }

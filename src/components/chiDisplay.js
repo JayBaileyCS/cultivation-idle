@@ -8,7 +8,6 @@ const ADVANCEMENT_TOOLTIP =
 
 export function ChiDisplay(props) {
   // Displays chi orb, current chi, max chi, chi generation rate, and current stage + level of advancement.
-  //TODO: Add leading zeroes, like 2.00/s
   return (
     <div>
       <div className="chiOrb">
@@ -48,8 +47,9 @@ function shouldShowAdvancement(props) {
 function ChiNumbers(props) {
   return (
     <p className="chiNumbers">
-      Chi: {Math.round(props.chi.currentChi)}/{Math.round(props.chi.maxChi)} (
-      {Math.round(props.chi.chiPerSecond * 100) / 100}/s)<br></br>
+      Chi: {Math.floor(props.chi.currentChi)}/{Math.floor(props.chi.maxChi)} (
+      {(Math.floor(props.chi.chiPerSecond * 100) / 100).toFixed(2)}/s)
+      <br></br>
       {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
     </p>
   );
