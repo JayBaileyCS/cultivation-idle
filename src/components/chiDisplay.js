@@ -9,7 +9,7 @@ const ADVANCEMENT_TOOLTIP =
 export function ChiDisplay(props) {
   // Displays chi orb, current chi, max chi, chi generation rate, and current stage + level of advancement.
   return (
-    <div>
+    <div className="chiDisplay">
       <div className="chiOrb">
         <Canvas
           width={100}

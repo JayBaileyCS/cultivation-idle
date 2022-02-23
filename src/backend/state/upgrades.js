@@ -64,7 +64,7 @@ export const insightUpgrade = {
   shouldReverse: true,
   effectText: "Upgrade Cost",
   tooltipFlavor:
-    'The great swordsman Miyamuto Musashi once said "To know one thing is to know ten thousand things." By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 5% (multiplicative) per level.',
+    "To know one thing is to know ten thousand things. By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 5% (multiplicative) per level.",
 };
 
 export const amplificationUpgrade = {
