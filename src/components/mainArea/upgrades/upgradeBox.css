@@ -18,14 +18,14 @@ body {
   vertical-align: top;
   display: inline-block;
   width: 160px;
-  height: 110px;
+  height: 80px;
   background-color: lightpink;
   border: 2px solid black;
   margin: 10px;
 }
 
 .disabledUpgradeBox {
-  line-height: 100px;
+  line-height: 70px;
   opacity: 0.25;
   text-align: center;
   font-size: 24px;
@@ -46,14 +46,6 @@ body {
   display: block;
   margin-right: 1px;
   float: right;
-}
-
-.upgradeBar {
-  display: inline-block;
-  top: 40px;
-  left: 5px;
-  width: 160px;
-  height: 20px;
 }
 
 .upgradeLevelUpButton {

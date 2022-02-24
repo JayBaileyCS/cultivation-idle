@@ -1,16 +1,10 @@
 import { GAME_LOOP_PER_SECOND, stageValues } from "../constants";
 import { state } from "./state/state";
-import {
-  amplificationUpgrade,
-  learningUpgrade,
-  meditationUpgrade,
-} from "./state/upgrades";
+import { amplificationUpgrade, meditationUpgrade } from "./state/upgrades";
 
 export function addResources(state) {
   let stageValue = stageValues[state.advancement.stage - 1];
   calculateChi(stageValue);
-  let learningRate = state.upgrades[learningUpgrade.index].currentEffectSize;
-  calculateXP(state.upgrades, learningRate);
   state.resources.chi.currentChi = addChi(state.resources.chi);
   return state;
 }
@@ -40,7 +34,9 @@ function calculateAmplificationMagnitude(amplification) {
   let chiRatio = state.resources.chi.currentChi / state.resources.chi.maxChi;
   let currentMagnitude =
     1 + (amplification.currentEffectMagnitude - 1) * amplification.level;
-  amplification.currentEffectSize = 1 + (currentMagnitude - 1) * chiRatio;
+  let amplificationRatio = 0.5 + chiRatio / 2;
+  amplification.currentEffectSize =
+    1 + (currentMagnitude - 1) * amplificationRatio;
 }
 
 function calculateMaxChi(stageValue) {
@@ -48,14 +44,6 @@ function calculateMaxChi(stageValue) {
     stageValue.baseMaxChi *
     stageValue.baseMaxChiIncrease ** (state.advancement.level - 1)
   );
-}
-
-function calculateXP(upgrades, learningRate) {
-  for (let i = 0; i < upgrades.length; i++) {
-    let baseRate = (upgrades[i].currentXPRate =
-      upgrades[i].baseXPRate * upgrades[i].currentInvestmentLevel);
-    upgrades[i].currentXPRate = baseRate * learningRate;
-  }
 }
 
 function addChi(chi) {

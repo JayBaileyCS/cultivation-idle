@@ -6,8 +6,8 @@ import { ChiDisplay } from "./components/chiDisplay";
 import { FeatureMenu } from "./components/featureMenu";
 import { MainArea } from "./components/mainArea/mainArea";
 import { addResources } from "./backend/addResources";
+import { checkUpgrades } from "./backend/checkUpgrades";
 import { state } from "./backend/state/state";
-import { addUpgrades } from "./backend/addUpgrades";
 import { GAME_LOOP_PER_SECOND } from "./constants";
 
 class Game extends React.Component {
@@ -18,7 +18,7 @@ class Game extends React.Component {
 
   render() {
     addResources(this.state);
-    addUpgrades(this.state);
+    checkUpgrades(this.state.upgrades);
     return (
       <div className="gameDisplay">
         <div className="featureMenu">
