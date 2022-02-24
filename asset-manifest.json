@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/cultivation-idle/static/css/main.635797cb.css",
+    "main.js": "/cultivation-idle/static/js/main.b6a9b192.js",
+    "static/js/787.84243f1d.chunk.js": "/cultivation-idle/static/js/787.84243f1d.chunk.js",
+    "index.html": "/cultivation-idle/index.html",
+    "main.635797cb.css.map": "/cultivation-idle/static/css/main.635797cb.css.map",
+    "main.b6a9b192.js.map": "/cultivation-idle/static/js/main.b6a9b192.js.map",
+    "787.84243f1d.chunk.js.map": "/cultivation-idle/static/js/787.84243f1d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.635797cb.css",
+    "static/js/main.b6a9b192.js"
+  ]
+}
