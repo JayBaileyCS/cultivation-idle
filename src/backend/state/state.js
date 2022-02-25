@@ -3,6 +3,7 @@ import {
   learningUpgrade,
   meditationUpgrade,
   insightUpgrade,
+  reinforcementUpgrade,
 } from "./upgrades";
 
 export let state = {
@@ -16,5 +17,6 @@ export let state = {
     learningUpgrade,
     insightUpgrade,
     amplificationUpgrade,
+    reinforcementUpgrade,
   ],
 };

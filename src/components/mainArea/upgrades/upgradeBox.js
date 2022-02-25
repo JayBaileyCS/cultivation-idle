@@ -24,7 +24,7 @@ export function UpgradeBox(props) {
         />
       </div>
       <div className="upgradeChiCost">
-        Chi Cost: {Math.round(upgrade.currentInvestmentCost)}
+        Chi Cost: {Math.round(upgrade.currentChiCost)}
       </div>
       <div className="upgradeLevelUpButton">
         {shouldAllowLevelUp(upgrade) ? (
@@ -33,6 +33,7 @@ export function UpgradeBox(props) {
           <DisabledUpgradeLevelUpButton />
         )}
       </div>
+      <div className="chiUpgradesDone">({upgrade.chiLevel})</div>
       <div className="upgradeEffect">
         x{Math.round(upgrade.currentEffectSize * 100) / 100}{" "}
         {upgrade.effectText}
@@ -45,7 +46,7 @@ function UpgradeBar(props) {
   return (
     <div>
       <div className="upgradeBarText">
-        {Math.floor(props.currentXP)} / {Math.floor(props.currentXPCost)} (
+        {Math.floor(props.currentXP)} / {Math.floor(props.currentXPCost)} XP (
         {Math.floor(props.currentXPRate * 100) / 100}/s)
       </div>
       <div className="upgradeBarRectangle">
@@ -96,7 +97,7 @@ function UpgradeLevelUpButton(props) {
   return (
     <button
       className="upgradeLevelUpButton"
-      onClick={() => increaseLevelUpRate(props)}
+      onClick={() => levelUpUpgrade(props.upgrade, "chi")}
     >
       {"+"}
     </button>
@@ -107,24 +108,13 @@ function DisabledUpgradeLevelUpButton(props) {
   return <button className="disabledUpgradeLevelUpButton">{"+"}</button>;
 }
 
-function increaseLevelUpRate(props) {
-  state.resources.chi.currentChi -= props.upgrade.currentInvestmentCost;
-  props.upgrade.currentInvestmentLevel += 1;
-  props.upgrade.currentInvestmentCost =
-    props.upgrade.baseInvestmentCost *
-    (props.upgrade.currentInvestmentLevel + 1) ** 2;
-  if (props.upgrade.level === 0) {
-    levelUpUpgrade(props.upgrade);
-  }
-}
-
 function getUpgradeFillBarWidth(currentXP, currentXPCost) {
   return (currentXP / currentXPCost) * UPGRADE_BAR_WIDTH;
 }
 
 function shouldAllowLevelUp(upgrade) {
   return (
-    state.resources.chi.currentChi >= upgrade.currentInvestmentCost &&
+    state.resources.chi.currentChi >= upgrade.currentChiCost &&
     isUnlocked(upgrade)
   );
 }

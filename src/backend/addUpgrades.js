@@ -14,32 +14,34 @@ export function addUpgrades(state) {
 function addUpgradeXP(upgrade) {
   upgrade.currentXPInvested += upgrade.currentXPRate / GAME_LOOP_PER_SECOND;
   if (upgrade.currentXPInvested >= upgrade.currentXPCost) {
-    levelUpUpgrade(upgrade);
+    levelUpUpgrade(upgrade, "XP");
   }
 }
 
 function calculateUpgradeCost(upgrade, insight) {
-  let currentInvestmentCost =
-    upgrade.baseInvestmentCost * (upgrade.currentInvestmentLevel + 1) ** 2;
+  let currentChiCost = upgrade.baseChiCost * (upgrade.chiLevel + 1) ** 2;
   let insightMagnitude =
     insight.level > 0 ? insight.currentEffectMagnitude ** insight.level : 1;
-  upgrade.currentInvestmentCost =
-    currentInvestmentCost * (1 / insightMagnitude);
+  upgrade.currentChiCost = currentChiCost * (1 / insightMagnitude);
 }
 
-export function levelUpUpgrade(upgrade) {
+export function levelUpUpgrade(upgrade, source) {
   upgrade.level += 1;
-  if (upgrade.level > 1) {
+  if (source === "XP") {
+    upgrade.XPLevel += 1;
+    upgrade.currentXPInvested = 0;
     upgrade.currentXPCost = Math.round(
       upgrade.currentXPCost +
         upgrade.baseXPCost *
-          upgrade.currentXPCostIncrease ** (upgrade.level - 1)
+          upgrade.currentXPCostIncrease ** Math.max(1, upgrade.XPLevel - 1)
     );
+  }
+  if (source === "chi") {
+    upgrade.chiLevel += 1;
   }
   upgrade.currentEffectSize =
     1 + (upgrade.currentEffectMagnitude - 1) * upgrade.level;
   if (upgrade.shouldReverse === true) {
     upgrade.currentEffectSize = 1 / upgrade.currentEffectSize;
   }
-  upgrade.currentXPInvested = 0;
 }

@@ -4,13 +4,13 @@ import {
   amplificationUpgrade,
   learningUpgrade,
   meditationUpgrade,
+  reinforcementUpgrade,
 } from "./state/upgrades";
 
 export function addResources(state) {
   let stageValue = stageValues[state.advancement.stage - 1];
   calculateChi(stageValue);
-  let learningRate = state.upgrades[learningUpgrade.index].currentEffectSize;
-  calculateXP(state.upgrades, learningRate);
+  calculateXP(state.upgrades);
   state.resources.chi.currentChi = addChi(state.resources.chi);
   return state;
 }
@@ -50,11 +50,17 @@ function calculateMaxChi(stageValue) {
   );
 }
 
-function calculateXP(upgrades, learningRate) {
+function calculateXP(upgrades) {
+  let learningRate = state.upgrades[learningUpgrade.index].currentEffectSize;
+  let baseReinforcementRate =
+    state.upgrades[reinforcementUpgrade.index].currentEffectSize;
   for (let i = 0; i < upgrades.length; i++) {
-    let baseRate = (upgrades[i].currentXPRate =
-      upgrades[i].baseXPRate * upgrades[i].currentInvestmentLevel);
-    upgrades[i].currentXPRate = baseRate * learningRate;
+    if (upgrades[i].level > 0) {
+      let reinforcementRate =
+        1 + (baseReinforcementRate - 1) * Math.max(1, upgrades[i].chiLevel);
+      upgrades[i].currentXPRate =
+        upgrades[i].baseXPRate * learningRate * reinforcementRate;
+    }
   }
 }
 

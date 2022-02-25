@@ -24,6 +24,11 @@ body {
   margin: 10px;
 }
 
+.chiUpgradesDone {
+  display: inline-block;
+  margin-left: 5px;
+}
+
 .disabledUpgradeBox {
   line-height: 100px;
   opacity: 0.25;
