@@ -46,13 +46,6 @@ export function FeatureMenu(props) {
           <DisabledMenuButton text={createRequiresAdvancementText(2, 2)} />
         )}
       </div>
-      <div className="toImplementButton2">
-        {shouldShowMenuButton(props.advancement, 3, 1) ? (
-          <MenuButton text="Should Not See This" />
-        ) : (
-          <DisabledMenuButton text={createRequiresAdvancementText(3, 1)} />
-        )}
-      </div>
     </div>
   );
 }

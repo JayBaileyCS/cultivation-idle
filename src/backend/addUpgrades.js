@@ -22,7 +22,9 @@ function addUpgradeXP(upgrade) {
 function calculateUpgradeCost(upgrade, insight) {
   let currentChiCost = upgrade.baseChiCost * (upgrade.chiLevel + 1) ** 2;
   let insightMagnitude =
-    insight.level > 0 ? insight.currentEffectMagnitude ** insight.level : 1;
+    insight.level > 0
+      ? 1 + (insight.currentEffectMagnitude - 1) * insight.level
+      : 1;
   upgrade.currentChiCost = currentChiCost * (1 / insightMagnitude);
 }
 

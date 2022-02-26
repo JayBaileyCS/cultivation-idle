@@ -63,11 +63,11 @@ export let insightUpgrade = {
   currentChiCost: 25,
   baseChiCost: 25,
   currentEffectSize: 1,
-  currentEffectMagnitude: 1.04,
+  currentEffectMagnitude: 1.05,
   shouldReverse: true,
   effectText: "Upgrade Cost",
   tooltipFlavor:
-    "To know one thing is to know ten thousand things. By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 4% (multiplicative) per level.",
+    "To know one thing is to know ten thousand things. By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 5% (multiplicative) per level.",
 };
 
 export let amplificationUpgrade = {
