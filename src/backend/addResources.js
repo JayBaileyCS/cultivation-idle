@@ -1,4 +1,5 @@
-import { GAME_LOOP_PER_SECOND, stageValues } from "../constants";
+import { GAME_LOOP_PER_SECOND } from "../constants";
+import { stageValues } from "./state/stages";
 import { state } from "./state/state";
 import {
   amplificationUpgrade,

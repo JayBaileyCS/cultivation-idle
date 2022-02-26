@@ -1,6 +1,7 @@
 import { Canvas, drawRectangle } from "../../../helpers";
 import { state } from "../../../backend/state/state";
-import { stageValues, NOT_YET_UNLOCKED_TOOLTIP } from "../../../constants";
+import { NOT_YET_UNLOCKED_TOOLTIP } from "../../../constants";
+import { stageValues } from "../../../backend/state/stages";
 import { levelUpUpgrade } from "../../../backend/addUpgrades";
 import "./upgradeBox.css";
 import { displayNumber } from "../../../helpers/numberDisplay";
@@ -127,7 +128,8 @@ function shouldAllowLevelUp(upgrade) {
 
 export function isUnlocked(upgrade) {
   return (
-    state.advancement.stage >= upgrade.stageRequired &&
-    state.advancement.level >= upgrade.advancementLevelRequired
+    state.advancement.stage > upgrade.stageRequired ||
+    (state.advancement.stage >= upgrade.stageRequired &&
+      state.advancement.level >= upgrade.advancementLevelRequired)
   );
 }

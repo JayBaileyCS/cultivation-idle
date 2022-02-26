@@ -1,6 +1,6 @@
 import { calculateAdvancement } from "../backend/advancement";
 import { Canvas, drawCircle } from "../helpers";
-import { stageValues } from "../constants";
+import { stageValues } from "../backend/state/stages";
 import { displayNumber } from "../helpers/numberDisplay";
 
 const CHI_ORB_RADIUS = 45;
