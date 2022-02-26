@@ -1,5 +1,6 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
 import { insightUpgrade } from "./state/upgrades";
+import { state } from "./state/state";
 
 export function addUpgrades(state) {
   for (let i = 0; i < state.upgrades.length; i++) {
@@ -38,6 +39,7 @@ export function levelUpUpgrade(upgrade, source) {
   }
   if (source === "chi") {
     upgrade.chiLevel += 1;
+    state.resources.chi.currentChi -= upgrade.currentChiCost;
   }
   upgrade.currentEffectSize =
     1 + (upgrade.currentEffectMagnitude - 1) * upgrade.level;

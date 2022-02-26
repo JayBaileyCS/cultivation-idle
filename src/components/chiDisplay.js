@@ -1,6 +1,7 @@
 import { calculateAdvancement } from "../backend/advancement";
 import { Canvas, drawCircle } from "../helpers";
 import { stageValues } from "../constants";
+import { displayNumber } from "../helpers/numberDisplay";
 
 const CHI_ORB_RADIUS = 45;
 const ADVANCEMENT_TOOLTIP =
@@ -47,8 +48,9 @@ function shouldShowAdvancement(props) {
 function ChiNumbers(props) {
   return (
     <p className="chiNumbers">
-      Chi: {Math.floor(props.chi.currentChi)}/{Math.floor(props.chi.maxChi)} (
-      {(Math.floor(props.chi.chiPerSecond * 100) / 100).toFixed(2)}/s)
+      Chi: {displayNumber(props.chi.currentChi, true)}/
+      {displayNumber(props.chi.maxChi, true)} (
+      {displayNumber(props.chi.chiPerSecond, false)}/s)
       <br></br>
       {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
     </p>

@@ -3,6 +3,7 @@ import { state } from "../../../backend/state/state";
 import { stageValues, NOT_YET_UNLOCKED_TOOLTIP } from "../../../constants";
 import { levelUpUpgrade } from "../../../backend/addUpgrades";
 import "./upgradeBox.css";
+import { displayNumber } from "../../../helpers/numberDisplay";
 
 const UPGRADE_BAR_WIDTH = 120;
 const UPGRADE_BAR_HEIGHT = 20;
@@ -14,7 +15,9 @@ export function UpgradeBox(props) {
     <div className="upgradeBox" title={upgrade.tooltipFlavor}>
       <div className="upgradeInfoRow">
         <div className="upgradeName">{upgrade.name}</div>
-        <div className="upgradeLevel">Lv. {upgrade.level}</div>
+        <div className="upgradeLevel">
+          Lv. {displayNumber(upgrade.level, true)}
+        </div>
       </div>
       <div className="upgradeBar">
         <UpgradeBar
@@ -23,20 +26,22 @@ export function UpgradeBox(props) {
           currentXPRate={upgrade.currentXPRate}
         />
       </div>
-      <div className="upgradeChiCost">
-        Chi Cost: {Math.round(upgrade.currentChiCost)}
-      </div>
-      <div className="upgradeLevelUpButton">
-        {shouldAllowLevelUp(upgrade) ? (
-          <UpgradeLevelUpButton upgrade={upgrade} />
-        ) : (
-          <DisabledUpgradeLevelUpButton />
-        )}
-      </div>
-      <div className="chiUpgradesDone">({upgrade.chiLevel})</div>
-      <div className="upgradeEffect">
-        x{Math.round(upgrade.currentEffectSize * 100) / 100}{" "}
-        {upgrade.effectText}
+      <div className="upgradeLevelUp">
+        <div className="upgradeChiCost">
+          Chi Cost: {displayNumber(upgrade.currentChiCost, true)}
+        </div>
+        <div className="upgradeLevelUpBtn">
+          {shouldAllowLevelUp(upgrade) ? (
+            <UpgradeLevelUpButton upgrade={upgrade} />
+          ) : (
+            <DisabledUpgradeLevelUpButton />
+          )}
+        </div>
+        <div className="chiUpgradesDone">({upgrade.chiLevel})</div>
+        <div className="upgradeEffect">
+          x{displayNumber(upgrade.currentEffectSize, false)}{" "}
+          {upgrade.effectText}
+        </div>
       </div>
     </div>
   );
@@ -46,8 +51,9 @@ function UpgradeBar(props) {
   return (
     <div>
       <div className="upgradeBarText">
-        {Math.floor(props.currentXP)} / {Math.floor(props.currentXPCost)} XP (
-        {Math.floor(props.currentXPRate * 100) / 100}/s)
+        {displayNumber(props.currentXP, true)} /{" "}
+        {displayNumber(props.currentXPCost, true)} XP (
+        {displayNumber(props.currentXPRate, false)}/s)
       </div>
       <div className="upgradeBarRectangle">
         <Canvas

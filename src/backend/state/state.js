@@ -4,6 +4,7 @@ import {
   meditationUpgrade,
   insightUpgrade,
   reinforcementUpgrade,
+  regenerationUpgrade,
 } from "./upgrades";
 
 export let state = {
@@ -18,5 +19,6 @@ export let state = {
     insightUpgrade,
     amplificationUpgrade,
     reinforcementUpgrade,
+    regenerationUpgrade,
   ],
 };

@@ -63,11 +63,11 @@ export let insightUpgrade = {
   currentChiCost: 25,
   baseChiCost: 25,
   currentEffectSize: 1,
-  currentEffectMagnitude: 1.05,
+  currentEffectMagnitude: 1.04,
   shouldReverse: true,
   effectText: "Upgrade Cost",
   tooltipFlavor:
-    "To know one thing is to know ten thousand things. By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 5% (multiplicative) per level.",
+    "To know one thing is to know ten thousand things. By making connections between disparate insights, you make it easier to continue to advance in your cultivation.\n\nReduces chi costs by 4% (multiplicative) per level.",
 };
 
 export let amplificationUpgrade = {
@@ -91,7 +91,7 @@ export let amplificationUpgrade = {
   shouldReverse: false,
   effectText: "Chi Generation",
   tooltipFlavor:
-    "By cycling your existing chi through your meridians, you harness and amplify its power.\n\nIncreases chi generation by up to 10% per level based on your current percentage of maximum chi.",
+    "By cycling your existing chi through your meridians, you harness and amplify its power.\n\nIncreases chi generation by up to 10% per level, becoming more powerful as you get closer to maximum chi.",
 };
 
 export let reinforcementUpgrade = {
@@ -116,4 +116,28 @@ export let reinforcementUpgrade = {
   effectText: "XP per chi level",
   tooltipFlavor:
     "By reinforcing old skills with more developed cultivation techniques, you gain further insights on how to perfect them.\n\nIncreases the XP rate of your skills by 2% per level for each chi level that skill has.",
+};
+
+export let regenerationUpgrade = {
+  name: "Regeneration",
+  index: 5,
+  stageRequired: 1,
+  advancementLevelRequired: 8,
+  level: 0,
+  XPLevel: 0,
+  chiLevel: 0,
+  currentXPInvested: 0,
+  baseXPRate: 1,
+  currentXPRate: 0,
+  currentXPCostIncrease: 1.1,
+  currentXPCost: 75,
+  baseXPCost: 75,
+  currentChiCost: 150,
+  baseChiCost: 150,
+  currentEffectSize: 1,
+  currentEffectMagnitude: 1.1,
+  shouldReverse: false,
+  effectText: "Chi generation",
+  tooltipFlavor:
+    "By using the empty space of your dantian to empower your cultivation, you increase your chi regeneration rate the emptier your chi becomes.\n\nIncreases chi generation by up to 10% per level, becoming more powerful as you get closer to minimum chi.",
 };

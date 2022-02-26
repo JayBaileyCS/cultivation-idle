@@ -4,6 +4,7 @@ import {
   amplificationUpgrade,
   learningUpgrade,
   meditationUpgrade,
+  regenerationUpgrade,
   reinforcementUpgrade,
 } from "./state/upgrades";
 
@@ -23,6 +24,7 @@ function calculateChi(stageValue) {
 function calculateChiPerSecond(stageValue) {
   let meditation = state.upgrades[meditationUpgrade.index];
   let amplification = state.upgrades[amplificationUpgrade.index];
+  let regeneration = state.upgrades[regenerationUpgrade.index];
   let chiPerSecond =
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
@@ -30,17 +32,28 @@ function calculateChiPerSecond(stageValue) {
     chiPerSecond = chiPerSecond * meditation.currentEffectSize;
   }
   if (amplification.level > 0) {
-    calculateAmplificationMagnitude(amplification);
+    calculateAmplificationEffect(amplification);
     chiPerSecond = chiPerSecond * amplification.currentEffectSize;
+  }
+  if (regeneration.level > 0) {
+    calculateRegenerationEffect(regeneration);
+    chiPerSecond = chiPerSecond * regeneration.currentEffectSize;
   }
   return chiPerSecond;
 }
 
-function calculateAmplificationMagnitude(amplification) {
+function calculateAmplificationEffect(amplification) {
   let chiRatio = state.resources.chi.currentChi / state.resources.chi.maxChi;
   let currentMagnitude =
     1 + (amplification.currentEffectMagnitude - 1) * amplification.level;
   amplification.currentEffectSize = 1 + (currentMagnitude - 1) * chiRatio;
+}
+
+function calculateRegenerationEffect(regeneration) {
+  let chiRatio = state.resources.chi.currentChi / state.resources.chi.maxChi;
+  let currentMagnitude =
+    1 + (regeneration.currentEffectMagnitude - 1) * regeneration.level;
+  regeneration.currentEffectSize = 1 + (currentMagnitude - 1) * (1 - chiRatio);
 }
 
 function calculateMaxChi(stageValue) {
