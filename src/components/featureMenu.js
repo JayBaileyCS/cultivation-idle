@@ -25,9 +25,7 @@ export function FeatureMenu(props) {
             onClick={() => swapMainArea("cultivation")}
           />
         ) : (
-          <DisabledMenuButton
-            text={createRequiresAdvancementText(props.advancement, 1, 2)}
-          />
+          <DisabledMenuButton text={createRequiresAdvancementText(1, 2)} />
         )}
       </div>
       <div className="toImplementButton">
@@ -38,27 +36,21 @@ export function FeatureMenu(props) {
             onClick={() => swapMainArea("featureThree")}
           />
         ) : (
-          <DisabledMenuButton
-            text={createRequiresAdvancementText(props.advancement, 2, 1)}
-          />
+          <DisabledMenuButton text={createRequiresAdvancementText(2, 1)} />
         )}
       </div>
       <div className="toImplementButton2">
         {shouldShowMenuButton(props.advancement, 2, 2) ? (
           <MenuButton text="Should Not See This" />
         ) : (
-          <DisabledMenuButton
-            text={createRequiresAdvancementText(props.advancement, 2, 2)}
-          />
+          <DisabledMenuButton text={createRequiresAdvancementText(2, 2)} />
         )}
       </div>
       <div className="toImplementButton2">
         {shouldShowMenuButton(props.advancement, 3, 1) ? (
           <MenuButton text="Should Not See This" />
         ) : (
-          <DisabledMenuButton
-            text={createRequiresAdvancementText(props.advancement, 3, 1)}
-          />
+          <DisabledMenuButton text={createRequiresAdvancementText(3, 1)} />
         )}
       </div>
     </div>

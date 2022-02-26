@@ -6,6 +6,7 @@ const chiGathering = {
   baseChiPerSecondIncrease: 1.1,
   baseMaxChiIncrease: 2,
 };
+
 const foundation = {
   name: "Foundation",
   index: 1,
