@@ -15,4 +15,13 @@ const foundation = {
   baseMaxChiIncrease: 3,
 };
 
-export const stageValues = [chiGathering, foundation];
+const core = {
+  name: "Core",
+  index: 2,
+  baseChiPerSecond: 10,
+  baseMaxChi: 50000000000,
+  baseChiPerSecondIncrease: 1.25,
+  baseMaxChiIncrease: 4,
+};
+
+export const stageValues = [chiGathering, foundation, core];

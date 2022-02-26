@@ -52,6 +52,15 @@ export function FeatureMenu(props) {
           />
         )}
       </div>
+      <div className="toImplementButton2">
+        {shouldShowMenuButton(props.advancement, 3, 1) ? (
+          <MenuButton text="Should Not See This" />
+        ) : (
+          <DisabledMenuButton
+            text={createRequiresAdvancementText(props.advancement, 3, 1)}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -84,10 +93,6 @@ function shouldShowMenuButton(advancement, requiredStage, requiredLevel) {
   );
 }
 
-function createRequiresAdvancementText(
-  advancement,
-  requiredStage,
-  requiredLevel
-) {
+function createRequiresAdvancementText(requiredStage, requiredLevel) {
   return `${stageValues[requiredStage - 1].name} ${requiredLevel}`;
 }
