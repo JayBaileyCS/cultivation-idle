@@ -111,11 +111,11 @@ export let reinforcementUpgrade = {
   currentChiCost: 70,
   baseChiCost: 70,
   currentEffectSize: 1,
-  currentEffectMagnitude: 1.02,
+  currentEffectMagnitude: 1.01,
   shouldReverse: false,
   effectText: "XP per chi level",
   tooltipFlavor:
-    "By reinforcing old skills with more developed cultivation techniques, you gain further insights on how to perfect them.\n\nIncreases the XP rate of your skills by 2% per level for each chi level that skill has.",
+    "By reinforcing old skills with more developed cultivation techniques, you gain further insights on how to perfect them.\n\nIncreases the XP rate of your skills by 1% per level for each chi level that skill has.",
 };
 
 export let regenerationUpgrade = {
