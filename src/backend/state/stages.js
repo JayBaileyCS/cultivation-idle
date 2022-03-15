@@ -4,14 +4,14 @@ const chiGathering = {
   baseChiPerSecond: 2,
   baseMaxChi: 100,
   baseChiPerSecondIncrease: 1.1,
-  baseMaxChiIncrease: 2,
+  baseMaxChiIncrease: 3,
 };
 
 const foundation = {
   name: "Foundation",
   index: 1,
   baseChiPerSecond: 4,
-  baseMaxChi: 100000,
+  baseMaxChi: 2500000,
   baseChiPerSecondIncrease: 1.15,
   baseMaxChiIncrease: 3,
 };
@@ -20,7 +20,7 @@ const core = {
   name: "Core",
   index: 2,
   baseChiPerSecond: 10,
-  baseMaxChi: 50000000000,
+  baseMaxChi: 100000000000,
   baseChiPerSecondIncrease: 1.25,
   baseMaxChiIncrease: 4,
 };

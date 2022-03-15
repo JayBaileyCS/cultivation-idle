@@ -12,11 +12,11 @@ body {
   border-radius: 3px;
   vertical-align: top;
   display: inline-block;
-  width: 175px;
+  width: 185px;
   height: 110px;
   background-color: lightpink;
   border: 2px solid black;
-  margin: 10px;
+  margin: 10px 5px;
 }
 
 .chiUpgradesDone {

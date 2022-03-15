@@ -1,6 +1,7 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
 import { insightUpgrade } from "./state/upgrades";
 import { state } from "./state/state";
+import { calculateEffectSize } from "./addResources";
 
 export function addUpgrades(state) {
   for (let i = 0; i < state.upgrades.length; i++) {
@@ -22,14 +23,11 @@ function addUpgradeXP(upgrade) {
 function calculateUpgradeCost(upgrade, insight) {
   let currentChiCost = upgrade.baseChiCost * (upgrade.chiLevel + 1) ** 2;
   let insightMagnitude =
-    insight.level > 0
-      ? 1 + (insight.currentEffectMagnitude - 1) * insight.level
-      : 1;
+    insight.chiLevel > 0 ? calculateEffectSize(insight) : 1;
   upgrade.currentChiCost = currentChiCost * (1 / insightMagnitude);
 }
 
 export function levelUpUpgrade(upgrade, source) {
-  upgrade.level += 1;
   if (source === "XP") {
     upgrade.XPLevel += 1;
     upgrade.currentXPInvested = 0;
@@ -42,9 +40,12 @@ export function levelUpUpgrade(upgrade, source) {
   if (source === "chi") {
     upgrade.chiLevel += 1;
     state.resources.chi.currentChi -= upgrade.currentChiCost;
+    if (upgrade.currentXPRate === 0) {
+      upgrade.currentXPRate = upgrade.baseXPRate;
+    }
   }
-  upgrade.currentEffectSize =
-    1 + (upgrade.currentEffectMagnitude - 1) * upgrade.level;
+
+  upgrade.currentEffectSize = calculateEffectSize(upgrade);
   if (upgrade.shouldReverse === true) {
     upgrade.currentEffectSize = 1 / upgrade.currentEffectSize;
   }

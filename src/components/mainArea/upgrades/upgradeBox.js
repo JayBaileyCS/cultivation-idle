@@ -6,7 +6,7 @@ import { levelUpUpgrade } from "../../../backend/addUpgrades";
 import "./upgradeBox.css";
 import { displayNumber } from "../../../helpers/numberDisplay";
 
-const UPGRADE_BAR_WIDTH = 120;
+const UPGRADE_BAR_WIDTH = 160;
 const UPGRADE_BAR_HEIGHT = 20;
 
 export function UpgradeBox(props) {
@@ -17,7 +17,7 @@ export function UpgradeBox(props) {
       <div className="upgradeInfoRow">
         <div className="upgradeName">{upgrade.name}</div>
         <div className="upgradeLevel">
-          Lv. {displayNumber(upgrade.level, true)}
+          Lv. {displayNumber(upgrade.XPLevel, true)}
         </div>
       </div>
       <div className="upgradeBar">
@@ -38,7 +38,9 @@ export function UpgradeBox(props) {
             <DisabledUpgradeLevelUpButton />
           )}
         </div>
-        <div className="chiUpgradesDone">({upgrade.chiLevel})</div>
+        <div className="chiUpgradesDone">
+          (x{displayNumber(getChiEffectSize(upgrade), false)})
+        </div>
         <div className="upgradeEffect">
           x{displayNumber(upgrade.currentEffectSize, false)}{" "}
           {upgrade.effectText}
@@ -117,6 +119,12 @@ function DisabledUpgradeLevelUpButton(props) {
 
 function getUpgradeFillBarWidth(currentXP, currentXPCost) {
   return (currentXP / currentXPCost) * UPGRADE_BAR_WIDTH;
+}
+
+function getChiEffectSize(upgrade) {
+  const chiEffectSize =
+    1 + (upgrade.currentChiMagnitude - 1) * upgrade.chiLevel;
+  return upgrade.shouldReverse ? 1 / chiEffectSize : chiEffectSize;
 }
 
 function shouldAllowLevelUp(upgrade) {

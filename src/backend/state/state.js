@@ -4,7 +4,7 @@ import {
   meditationUpgrade,
   insightUpgrade,
   reinforcementUpgrade,
-  regenerationUpgrade,
+  empowerUpgrade,
 } from "./upgrades";
 
 export let state = {
@@ -15,10 +15,10 @@ export let state = {
   mainArea: "currentArea",
   upgrades: [
     meditationUpgrade,
+    amplificationUpgrade,
     learningUpgrade,
     insightUpgrade,
-    amplificationUpgrade,
     reinforcementUpgrade,
-    regenerationUpgrade,
+    empowerUpgrade,
   ],
 };

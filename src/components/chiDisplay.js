@@ -5,7 +5,7 @@ import { displayNumber } from "../helpers/numberDisplay";
 
 const CHI_ORB_RADIUS = 45;
 const ADVANCEMENT_TOOLTIP =
-  "Consumes all of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
+  "Consumes half of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
 
 export function ChiDisplay(props) {
   // Displays chi orb, current chi, max chi, chi generation rate, and current stage + level of advancement.
