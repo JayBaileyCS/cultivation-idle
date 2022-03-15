@@ -15,8 +15,8 @@ export let state = {
   mainArea: "currentArea",
   upgrades: [
     meditationUpgrade,
-    amplificationUpgrade,
     learningUpgrade,
+    amplificationUpgrade,
     insightUpgrade,
     reinforcementUpgrade,
     empowerUpgrade,

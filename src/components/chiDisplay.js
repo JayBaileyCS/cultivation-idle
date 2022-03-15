@@ -5,7 +5,10 @@ import { displayNumber } from "../helpers/numberDisplay";
 
 const CHI_ORB_RADIUS = 45;
 const ADVANCEMENT_TOOLTIP =
-  "Consumes half of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
+  "Consumes all of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
+const DAY_IN_SECONDS = 86400;
+const HOUR_IN_SECONDS = 3600;
+const MINUTE_IN_SECONDS = 60;
 
 export function ChiDisplay(props) {
   // Displays chi orb, current chi, max chi, chi generation rate, and current stage + level of advancement.
@@ -51,7 +54,7 @@ function ChiNumbers(props) {
       Chi: {displayNumber(props.chi.currentChi, true)}/
       {displayNumber(props.chi.maxChi, true)} (
       {displayNumber(props.chi.chiPerSecond, false)}/s)
-      <br></br>
+      <br></br>TEST: +3/s<br></br>
       {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
     </p>
   );
@@ -75,4 +78,29 @@ function DisabledAdvancementButton(props) {
       Advance
     </button>
   );
+}
+
+function displayTimeToAdvance(currentChi, maxChi, chiPerSecond) {
+  let seconds = (maxChi - currentChi) / chiPerSecond;
+  let timeToAdvance = "";
+  if (seconds > 1000000) {
+    return "A long time ";
+  }
+  if (seconds > DAY_IN_SECONDS) {
+    let days = Math.floor(seconds / DAY_IN_SECONDS);
+    seconds -= DAY_IN_SECONDS * days;
+    timeToAdvance += `${days.toString()}d `;
+  }
+  if (seconds > HOUR_IN_SECONDS) {
+    let hours = Math.floor(seconds / HOUR_IN_SECONDS);
+    seconds -= HOUR_IN_SECONDS * hours;
+    timeToAdvance += `${hours.toString()}h `;
+  }
+  if (seconds > MINUTE_IN_SECONDS) {
+    let minutes = Math.floor(seconds / MINUTE_IN_SECONDS);
+    seconds -= MINUTE_IN_SECONDS * minutes;
+    timeToAdvance += `${minutes.toString()}m `;
+  }
+  timeToAdvance += `${Math.floor(seconds).toString()}s `;
+  return timeToAdvance;
 }

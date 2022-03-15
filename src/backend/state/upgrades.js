@@ -14,16 +14,16 @@ export let meditationUpgrade = {
   currentChiCost: 10,
   baseChiCost: 10,
   currentEffectSize: 1,
-  currentXPMagnitude: 1.1,
+  currentXPMagnitude: 1.15,
   currentChiMagnitude: 1.25,
   shouldReverse: false,
   effectText: "Chi Generation",
   tooltipFlavor:
-    "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.\n\nAdvances chi generation by 10% per level.\nMultiplies by 25% when chi is added.",
+    "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.\n\nAdvances chi generation by 15% per level.\nMultiplies by 25% when chi is added.",
 };
 
-export let amplificationUpgrade = {
-  name: "Amplification",
+export let learningUpgrade = {
+  name: "Learning",
   index: 1,
   stageRequired: 1,
   advancementLevelRequired: 2,
@@ -41,33 +41,33 @@ export let amplificationUpgrade = {
   currentXPMagnitude: 1.15,
   currentChiMagnitude: 1.2,
   shouldReverse: false,
-  effectText: "Chi Generation",
+  effectText: "XP Generation",
   tooltipFlavor:
-    "By cycling your existing chi through your meridians, you harness and amplify its power.\n\nIncreases chi generation by 5-15% per level, becoming more powerful as you get closer to maximum chi.\nMultiplies by 20% when chi is added.",
+    "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.\n\nIncreases XP generation by 15% per level.\nMultiplies by 20% when chi is added.",
 };
 
-export let learningUpgrade = {
-  name: "Learning",
+export let amplificationUpgrade = {
+  name: "Amplification",
   index: 2,
   stageRequired: 1,
-  advancementLevelRequired: 4,
+  advancementLevelRequired: 3,
   XPLevel: 0,
   chiLevel: 0,
   currentXPInvested: 0,
   baseXPRate: 1,
   currentXPRate: 0,
-  currentXPCostIncrease: 1.15,
+  currentXPCostIncrease: 1.1,
   currentXPCost: 30,
   baseXPCost: 30,
   currentChiCost: 30,
   baseChiCost: 30,
   currentEffectSize: 1,
-  currentXPMagnitude: 1.1,
+  currentXPMagnitude: 1.15,
   currentChiMagnitude: 1.2,
   shouldReverse: false,
-  effectText: "XP Generation",
+  effectText: "Chi Generation",
   tooltipFlavor:
-    "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.\n\nIncreases XP generation by 10% per level.\nIncreases by 20% when chi is added.",
+    "By cycling your existing chi through your meridians, you harness and amplify its power.\n\nIncreases chi generation by 5-15% per level, becoming more powerful as you get closer to maximum chi.\nMultiplies by 20% when chi is added.",
 };
 
 export let insightUpgrade = {
@@ -98,7 +98,7 @@ export let reinforcementUpgrade = {
   name: "Reinforcement",
   index: 4,
   stageRequired: 1,
-  advancementLevelRequired: 6,
+  advancementLevelRequired: 5,
   XPLevel: 0,
   chiLevel: 0,
   currentXPInvested: 0,
@@ -130,15 +130,15 @@ export let empowerUpgrade = {
   baseXPRate: 1,
   currentXPRate: 0,
   currentXPCostIncrease: 1.1,
-  currentXPCost: 75,
-  baseXPCost: 75,
+  currentXPCost: 70,
+  baseXPCost: 70,
   currentChiCost: 150,
   baseChiCost: 150,
   currentEffectSize: 1,
   currentXPMagnitude: 1.1,
   currentChiMagnitude: 1.1,
   shouldReverse: false,
-  effectText: "Chi generation",
+  effectText: "resource generation",
   tooltipFlavor:
     "By adding more and more chi to your cultivation techniques as you increase in power, you find ways to empower them in strength.\n\nIncreases resource generation by 10% per level.\nIncreases effect size by 10% when chi is added.",
 };
