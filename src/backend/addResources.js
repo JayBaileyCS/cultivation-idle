@@ -5,7 +5,6 @@ import {
   amplificationUpgrade,
   learningUpgrade,
   meditationUpgrade,
-  empowerUpgrade,
   reinforcementUpgrade,
 } from "./state/upgrades";
 
@@ -25,15 +24,12 @@ function calculateChi(stageValue) {
 function calculateChiPerSecond(stageValue) {
   let meditation = state.upgrades[meditationUpgrade.index];
   let amplification = state.upgrades[amplificationUpgrade.index];
-  let empower = state.upgrades[empowerUpgrade.index];
   let chiPerSecond =
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
   if (meditation.chiLevel > 0) {
+    meditation.currentEffectSize = calculateEffectSize(meditation);
     chiPerSecond = chiPerSecond * meditation.currentEffectSize;
-  }
-  if (empower.chiLevel > 0) {
-    chiPerSecond = chiPerSecond * empower.currentEffectSize;
   }
   if (amplification.chiLevel > 0) {
     calculateAmplificationEffect(amplification);
@@ -58,7 +54,6 @@ function calculateMaxChi(stageValue) {
 
 function calculateXP(upgrades) {
   let learningRate = state.upgrades[learningUpgrade.index].currentEffectSize;
-  let empowerRate = state.upgrades[empowerUpgrade.index].currentEffectSize;
   let baseReinforcementRate =
     state.upgrades[reinforcementUpgrade.index].currentEffectSize;
   for (let i = 0; i < upgrades.length; i++) {
@@ -66,7 +61,7 @@ function calculateXP(upgrades) {
       let reinforcementRate =
         1 + (baseReinforcementRate - 1) * Math.max(1, upgrades[i].chiLevel);
       upgrades[i].currentXPRate =
-        upgrades[i].baseXPRate * learningRate * reinforcementRate * empowerRate;
+        upgrades[i].baseXPRate * learningRate * reinforcementRate;
     }
   }
 }
