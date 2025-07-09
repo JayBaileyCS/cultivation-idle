@@ -16,7 +16,7 @@ export function addUpgrades(state) {
 function addUpgradeXP(upgrade) {
   let xpToAdd = upgrade.currentXPRate / GAME_LOOP_PER_SECOND;
   if (state.testMode) {
-    xpToAdd *= 10; // TODO: Remove before production
+    xpToAdd *= 50; // TODO: Remove before production
   }
   upgrade.currentXPInvested += xpToAdd;
   if (upgrade.currentXPInvested >= upgrade.currentXPCost) {

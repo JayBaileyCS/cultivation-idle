@@ -72,7 +72,7 @@ function calculateXP(upgrades) {
 }
 
 function addChi(chi) {
-  let chiToAdd = chi.chiPerSecond / GAME_LOOP_PER_SECOND;
+  let chiToAdd = (chi.chiPerSecond + 3) / GAME_LOOP_PER_SECOND; // TODO: Remove +3 when early game mechanic added.
   if (state.testMode) {
     chiToAdd *= 100; // TODO: Remove before production
   }
