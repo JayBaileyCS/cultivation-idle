@@ -42,7 +42,7 @@ export function UpgradeBox(props) {
           (x{displayNumber(getChiEffectSize(upgrade), false)})
         </div>
         <div className="upgradeEffect">
-          x{displayNumber(upgrade.currentEffectSize, false)}{" "}
+          x{displayNumber(upgrade.shouldReverse ? 1 / upgrade.currentEffectSize : upgrade.currentEffectSize, false)}{" "}
           {upgrade.effectText}
         </div>
       </div>

@@ -57,6 +57,18 @@ button {
   color: lightslategray;
 }
 
+.testButton {
+  color: black;
+  background-color: lightgray;
+  margin-left: 5px;
+}
+
+.testButtonActive {
+  color: white;
+  background-color: red;
+  margin-left: 5px;
+}
+
 .mainArea {
   position: absolute;
   left: 150px;

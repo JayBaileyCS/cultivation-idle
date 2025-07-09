@@ -2,10 +2,15 @@ import { calculateAdvancement } from "../backend/advancement";
 import { Canvas, drawCircle } from "../helpers";
 import { stageValues } from "../backend/state/stages";
 import { displayNumber } from "../helpers/numberDisplay";
+import { amplificationUpgrade } from "../backend/state/upgrades";
+import { state } from "../backend/state/state";
 
 const CHI_ORB_RADIUS = 45;
-const ADVANCEMENT_TOOLTIP =
-  "Consumes all of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
+function getAdvancementTooltip(currentStage) {
+  const stage = stageValues[currentStage - 1];
+  const increasePercentage = Math.round((stage.baseChiPerSecondIncrease - 1) * 100);
+  return `Consumes all of your chi, but in return advances you to the next level of cultivation. This unlocks new features and abilities, and increases chi generation by ${increasePercentage}% per level.`;
+}
 const DAY_IN_SECONDS = 86400;
 const HOUR_IN_SECONDS = 3600;
 const MINUTE_IN_SECONDS = 60;
@@ -31,8 +36,9 @@ export function ChiDisplay(props) {
         {shouldShowAdvancement(props) ? (
           <AdvancementButton chi={props.chi} advancement={props.advancement} />
         ) : (
-          <DisabledAdvancementButton chi={props.chi} />
+          <DisabledAdvancementButton chi={props.chi} advancement={props.advancement} />
         )}
+        <TestButton />
       </div>
     </div>
   );
@@ -54,8 +60,9 @@ function ChiNumbers(props) {
       Chi: {displayNumber(props.chi.currentChi, true)}/
       {displayNumber(props.chi.maxChi, true)} (
       {displayNumber(props.chi.chiPerSecond, false)}/s)
-      <br></br>TEST: +3/s<br></br>
+      <br></br>
       {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
+      Time to Advance: {displayTimeToAdvance(props.chi.currentChi, props.chi.maxChi, props.chi.chiPerSecond)}
     </p>
   );
 }
@@ -64,7 +71,7 @@ function AdvancementButton(props) {
   return (
     <button
       className="advancementButton"
-      title={ADVANCEMENT_TOOLTIP}
+      title={getAdvancementTooltip(props.advancement.stage)}
       onClick={() => calculateAdvancement(props.advancement)}
     >
       Advance
@@ -74,14 +81,50 @@ function AdvancementButton(props) {
 
 function DisabledAdvancementButton(props) {
   return (
-    <button className="disabledAdvancementButton" title={ADVANCEMENT_TOOLTIP}>
+    <button className="disabledAdvancementButton" title={getAdvancementTooltip(props.advancement.stage)}>
       Advance
     </button>
   );
 }
 
+function TestButton() {
+  const toggleTestMode = () => {
+    state.testMode = !state.testMode;
+  };
+
+  return (
+    <button
+      className={state.testMode ? "testButtonActive" : "testButton"}
+      title="Toggle x100 chi generation for testing (TODO: Remove before production)"
+      onClick={toggleTestMode}
+    >
+      Test {state.testMode ? "ON" : "OFF"}
+    </button>
+  );
+}
+
 function displayTimeToAdvance(currentChi, maxChi, chiPerSecond) {
-  let seconds = (maxChi - currentChi) / chiPerSecond;
+  // Account for Cycling upgrade's variable effect
+  let adjustedChiPerSecond = chiPerSecond;
+  
+  // Check if Cycling upgrade is active
+  const cyclingState = state.upgrades[amplificationUpgrade.index];
+  if (cyclingState.chiLevel > 0) {
+    // Copy current state to cycling upgrade
+    Object.assign(amplificationUpgrade, cyclingState);
+    
+    // Calculate current cycling effect
+    const currentCyclingEffect = amplificationUpgrade.calculateEffect();
+    
+    // Calculate cycling effect at midpoint (currentChi + maxChi / 2)
+    const midpointChi = currentChi + (maxChi - currentChi) / 2;
+    const midpointCyclingEffect = amplificationUpgrade.calculateEffectForDisplay(midpointChi, maxChi);
+    
+    // Adjust chiPerSecond based on the ratio between current and midpoint effects
+    adjustedChiPerSecond = (chiPerSecond / currentCyclingEffect) * midpointCyclingEffect;
+  }
+  
+  let seconds = (maxChi - currentChi) / adjustedChiPerSecond;
   let timeToAdvance = "";
   if (seconds > 1000000) {
     return "A long time ";

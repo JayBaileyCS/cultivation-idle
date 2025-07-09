@@ -1,7 +1,7 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
 import { insightUpgrade } from "./state/upgrades";
 import { state } from "./state/state";
-import { calculateEffectSize } from "./addResources";
+import { upgradeRegistry } from "./upgrades";
 
 export function addUpgrades(state) {
   for (let i = 0; i < state.upgrades.length; i++) {
@@ -14,7 +14,11 @@ export function addUpgrades(state) {
 }
 
 function addUpgradeXP(upgrade) {
-  upgrade.currentXPInvested += upgrade.currentXPRate / GAME_LOOP_PER_SECOND;
+  let xpToAdd = upgrade.currentXPRate / GAME_LOOP_PER_SECOND;
+  if (state.testMode) {
+    xpToAdd *= 10; // TODO: Remove before production
+  }
+  upgrade.currentXPInvested += xpToAdd;
   if (upgrade.currentXPInvested >= upgrade.currentXPCost) {
     levelUpUpgrade(upgrade, "XP");
   }
@@ -22,8 +26,13 @@ function addUpgradeXP(upgrade) {
 
 function calculateUpgradeCost(upgrade, insight) {
   let currentChiCost = upgrade.baseChiCost * 2 ** upgrade.chiLevel;
-  let insightMagnitude =
-    insight.chiLevel > 0 ? calculateEffectSize(insight) : 1;
+  let insightMagnitude = 1;
+  if (insight.chiLevel > 0) {
+    // Copy state to insight upgrade class and calculate effect
+    Object.assign(insightUpgrade, insight);
+    insightMagnitude = insightUpgrade.calculateEffect();
+    insight.currentEffectSize = insightUpgrade.currentEffectSize;
+  }
   upgrade.currentChiCost = currentChiCost * (1 / insightMagnitude);
 }
 
@@ -45,7 +54,10 @@ export function levelUpUpgrade(upgrade, source) {
     }
   }
 
-  upgrade.currentEffectSize = calculateEffectSize(upgrade);
+  // Use the upgrade class to calculate effect
+  const upgradeClass = upgradeRegistry.getUpgradeByIndex(upgrade.index);
+  Object.assign(upgradeClass, upgrade);
+  upgrade.currentEffectSize = upgradeClass.calculateEffect();
   if (upgrade.shouldReverse === true) {
     upgrade.currentEffectSize = 1 / upgrade.currentEffectSize;
   }

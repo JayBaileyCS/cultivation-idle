@@ -1,12 +1,7 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
 import { stageValues } from "./state/stages";
 import { state } from "./state/state";
-import {
-  amplificationUpgrade,
-  learningUpgrade,
-  meditationUpgrade,
-  reinforcementUpgrade,
-} from "./state/upgrades";
+import { upgradeRegistry } from "./upgrades";
 
 export function addResources(state) {
   let stageValue = stageValues[state.advancement.stage - 1];
@@ -22,28 +17,26 @@ function calculateChi(stageValue) {
 }
 
 function calculateChiPerSecond(stageValue) {
-  let meditation = state.upgrades[meditationUpgrade.index];
-  let amplification = state.upgrades[amplificationUpgrade.index];
   let chiPerSecond =
     stageValue.baseChiPerSecond *
     stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
-  if (meditation.chiLevel > 0) {
-    meditation.currentEffectSize = calculateEffectSize(meditation);
-    chiPerSecond = chiPerSecond * meditation.currentEffectSize;
+  
+  // Apply all chi-affecting upgrades
+  const chiUpgrades = upgradeRegistry.getUpgradesByResourceType("chi");
+  for (const upgrade of chiUpgrades) {
+    const upgradeState = state.upgrades[upgrade.index];
+    if (upgradeState.chiLevel > 0) {
+      // Copy current state to the upgrade class instance
+      Object.assign(upgrade, upgradeState);
+      chiPerSecond = upgrade.applyEffect(chiPerSecond);
+      // Copy calculated effect back to state
+      upgradeState.currentEffectSize = upgrade.currentEffectSize;
+    }
   }
-  if (amplification.chiLevel > 0) {
-    calculateAmplificationEffect(amplification);
-    chiPerSecond = chiPerSecond * amplification.currentEffectSize;
-  }
+  
   return chiPerSecond;
 }
 
-function calculateAmplificationEffect(amplification) {
-  let chiRatio =
-    (1 + (state.resources.chi.currentChi / state.resources.chi.maxChi) * 2) / 3; // 1/3 when empty, up to 1 when full.
-  let currentMagnitude = calculateEffectSize(amplification);
-  amplification.currentEffectSize = 1 + (currentMagnitude - 1) * chiRatio;
-}
 
 function calculateMaxChi(stageValue) {
   return (
@@ -53,26 +46,36 @@ function calculateMaxChi(stageValue) {
 }
 
 function calculateXP(upgrades) {
-  let learningRate = state.upgrades[learningUpgrade.index].currentEffectSize;
-  let baseReinforcementRate =
-    state.upgrades[reinforcementUpgrade.index].currentEffectSize;
+  // Get XP-affecting upgrades
+  const xpUpgrades = upgradeRegistry.getUpgradesByResourceType("xp");
+  const learningUpgrade = xpUpgrades.find(u => u.name === "Learning");
+  const reinforcementUpgrade = xpUpgrades.find(u => u.name === "Reinforcement");
+  
+  // Calculate learning rate
+  const learningState = state.upgrades[learningUpgrade.index];
+  Object.assign(learningUpgrade, learningState);
+  let learningRate = learningUpgrade.calculateEffect();
+  learningState.currentEffectSize = learningUpgrade.currentEffectSize;
+  
+  // Calculate reinforcement and apply to all upgrades
+  const reinforcementState = state.upgrades[reinforcementUpgrade.index];
+  Object.assign(reinforcementUpgrade, reinforcementState);
+  
   for (let i = 0; i < upgrades.length; i++) {
     if (upgrades[i].chiLevel > 0) {
-      let reinforcementRate =
-        1 + (baseReinforcementRate - 1) * Math.max(1, upgrades[i].chiLevel);
-      upgrades[i].currentXPRate =
-        upgrades[i].baseXPRate * learningRate * reinforcementRate;
+      let baseRate = upgrades[i].baseXPRate * learningRate;
+      upgrades[i].currentXPRate = reinforcementUpgrade.applyReinforcementEffect(baseRate, upgrades[i].chiLevel);
     }
   }
+  
+  reinforcementState.currentEffectSize = reinforcementUpgrade.currentEffectSize;
 }
 
 function addChi(chi) {
-  let chiToAdd = (chi.chiPerSecond + 3) / GAME_LOOP_PER_SECOND; // TODO: Remove +3 when early game mechanic added.
+  let chiToAdd = chi.chiPerSecond / GAME_LOOP_PER_SECOND;
+  if (state.testMode) {
+    chiToAdd *= 100; // TODO: Remove before production
+  }
   return Math.min(chi.maxChi, chi.currentChi + chiToAdd);
 }
 
-export function calculateEffectSize(upgrade) {
-  const XPEffect = 1 + (upgrade.currentXPMagnitude - 1) * upgrade.XPLevel;
-  const chiEffect = 1 + (upgrade.currentChiMagnitude - 1) * upgrade.chiLevel;
-  return XPEffect * chiEffect;
-}
