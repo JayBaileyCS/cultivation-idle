@@ -69,6 +69,30 @@ button {
   margin-left: 5px;
 }
 
+.saveButton {
+  color: black;
+  background-color: lightblue;
+  margin-left: 5px;
+}
+
+.exportButton {
+  color: black;
+  background-color: lightgreen;
+  margin-left: 5px;
+}
+
+.importButton {
+  color: black;
+  background-color: lightyellow;
+  margin-left: 5px;
+}
+
+.clearButton {
+  color: white;
+  background-color: darkred;
+  margin-left: 5px;
+}
+
 .mainArea {
   position: absolute;
   left: 150px;

@@ -9,6 +9,7 @@ import { addResources } from "./backend/addResources";
 import { state } from "./backend/state/state";
 import { addUpgrades } from "./backend/addUpgrades";
 import { GAME_LOOP_PER_SECOND } from "./constants";
+import { saveGameState } from "./backend/saveSystem";
 
 class Game extends React.Component {
   constructor(props) {
@@ -41,6 +42,16 @@ class Game extends React.Component {
 setInterval(function () {
   ReactDOM.render(<Game />, document.getElementById("root"));
 }, 1000 / GAME_LOOP_PER_SECOND);
+
+// Auto-save every 30 seconds
+setInterval(function () {
+  saveGameState(state);
+}, 30000);
+
+// Save on page unload
+window.addEventListener('beforeunload', () => {
+  saveGameState(state);
+});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -6,11 +6,8 @@ import { amplificationUpgrade } from "../backend/state/upgrades";
 import { state } from "../backend/state/state";
 
 const CHI_ORB_RADIUS = 45;
-function getAdvancementTooltip(currentStage) {
-  const stage = stageValues[currentStage - 1];
-  const increasePercentage = Math.round((stage.baseChiPerSecondIncrease - 1) * 100);
-  return `Consumes all of your chi, but in return advances you to the next level of cultivation. This unlocks new features and abilities, and increases chi generation by ${increasePercentage}% per level.`;
-}
+const ADVANCEMENT_TOOLTIP =
+  "Consumes all of your chi, but in return advances you to the next stage of cultivation. This unlocks new features and abilities, and increases chi generation by 10% per stage.";
 const DAY_IN_SECONDS = 86400;
 const HOUR_IN_SECONDS = 3600;
 const MINUTE_IN_SECONDS = 60;
@@ -36,9 +33,8 @@ export function ChiDisplay(props) {
         {shouldShowAdvancement(props) ? (
           <AdvancementButton chi={props.chi} advancement={props.advancement} />
         ) : (
-          <DisabledAdvancementButton chi={props.chi} advancement={props.advancement} />
+          <DisabledAdvancementButton chi={props.chi} />
         )}
-        <TestButton />
       </div>
     </div>
   );
@@ -59,10 +55,9 @@ function ChiNumbers(props) {
     <p className="chiNumbers">
       Chi: {displayNumber(props.chi.currentChi, true)}/
       {displayNumber(props.chi.maxChi, true)} (
-      {displayNumber(props.chi.chiPerSecond, false)}/s)
-      <br></br>
-      {stageValues[props.advancement.stage - 1].name} {props.advancement.level}
-      Time to Advance: {displayTimeToAdvance(props.chi.currentChi, props.chi.maxChi, props.chi.chiPerSecond)}
+      {displayNumber(props.chi.chiPerSecond, false)}/s) <br></br>
+      {stageValues[props.advancement.stage - 1].name} {props.advancement.level} <br></br>
+      Time to Max: {displayTimeToAdvance(props.chi.currentChi, props.chi.maxChi, props.chi.chiPerSecond)}
     </p>
   );
 }
@@ -71,7 +66,7 @@ function AdvancementButton(props) {
   return (
     <button
       className="advancementButton"
-      title={getAdvancementTooltip(props.advancement.stage)}
+      title={ADVANCEMENT_TOOLTIP}
       onClick={() => calculateAdvancement(props.advancement)}
     >
       Advance
@@ -81,24 +76,8 @@ function AdvancementButton(props) {
 
 function DisabledAdvancementButton(props) {
   return (
-    <button className="disabledAdvancementButton" title={getAdvancementTooltip(props.advancement.stage)}>
+    <button className="disabledAdvancementButton" title={ADVANCEMENT_TOOLTIP}>
       Advance
-    </button>
-  );
-}
-
-function TestButton() {
-  const toggleTestMode = () => {
-    state.testMode = !state.testMode;
-  };
-
-  return (
-    <button
-      className={state.testMode ? "testButtonActive" : "testButton"}
-      title="Toggle x100 chi generation for testing (TODO: Remove before production)"
-      onClick={toggleTestMode}
-    >
-      Test {state.testMode ? "ON" : "OFF"}
     </button>
   );
 }
@@ -125,25 +104,25 @@ function displayTimeToAdvance(currentChi, maxChi, chiPerSecond) {
   }
   
   let seconds = (maxChi - currentChi) / adjustedChiPerSecond;
-  let timeToAdvance = "";
+  let timeToMax = "";
   if (seconds > 1000000) {
     return "A long time ";
   }
   if (seconds > DAY_IN_SECONDS) {
     let days = Math.floor(seconds / DAY_IN_SECONDS);
     seconds -= DAY_IN_SECONDS * days;
-    timeToAdvance += `${days.toString()}d `;
+    timeToMax += `${days.toString()}d `;
   }
   if (seconds > HOUR_IN_SECONDS) {
     let hours = Math.floor(seconds / HOUR_IN_SECONDS);
     seconds -= HOUR_IN_SECONDS * hours;
-    timeToAdvance += `${hours.toString()}h `;
+    timeToMax += `${hours.toString()}h `;
   }
   if (seconds > MINUTE_IN_SECONDS) {
     let minutes = Math.floor(seconds / MINUTE_IN_SECONDS);
     seconds -= MINUTE_IN_SECONDS * minutes;
-    timeToAdvance += `${minutes.toString()}m `;
+    timeToMax += `${minutes.toString()}m `;
   }
-  timeToAdvance += `${Math.floor(seconds).toString()}s `;
-  return timeToAdvance;
+  timeToMax += `${Math.floor(seconds).toString()}s `;
+  return timeToMax;
 }
