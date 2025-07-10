@@ -1,4 +1,3 @@
-import { state } from "../../backend/state/state";
 import {
   UpgradeBox,
   isUnlocked,
@@ -6,10 +5,10 @@ import {
 } from "./upgrades/upgradeBox";
 import { CultivationBox } from "./cultivationBox";
 
-let cultivation = () =>
-  state.upgrades.map((upgrade) =>
-    isUnlocked(upgrade) ? (
-      <UpgradeBox key={upgrade.name} upgrade={upgrade} />
+let cultivation = (gameState, onUpgradeLevelUp) =>
+  gameState.upgrades.map((upgrade) =>
+    isUnlocked(upgrade, gameState) ? (
+      <UpgradeBox key={upgrade.name} upgrade={upgrade} gameState={gameState} onUpgradeLevelUp={onUpgradeLevelUp} />
     ) : (
       <DisabledUpgradeBox key={upgrade.name} upgrade={upgrade} />
     )
@@ -41,7 +40,7 @@ export function MainArea(props) {
         </div>
       );
     case "cultivation":
-      return <div className="cultivation">{cultivation()}</div>;
+      return <div className="cultivation">{cultivation(props.state, props.onUpgradeLevelUp)}</div>;
     case "featureThree":
       return <div className="featureThree">Implement Later</div>;
     default:

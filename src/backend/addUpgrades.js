@@ -1,26 +1,41 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
-import { insightUpgrade } from "./state/upgrades";
-import { state } from "./state/state";
-import { upgradeRegistry } from "./upgrades";
+import { upgradeRegistry } from "./upgrades/UpgradeRegistry";
 
-export function addUpgrades(state) {
-  for (let i = 0; i < state.upgrades.length; i++) {
-    addUpgradeXP(state.upgrades[i]);
+export function addUpgrades(gameState) {
+  const insightUpgrade = upgradeRegistry.getUpgradeByName("Insight");
+  for (let i = 0; i < gameState.upgrades.length; i++) {
+    addUpgradeXP(gameState.upgrades[i], gameState);
     calculateUpgradeCost(
-      state.upgrades[i],
-      state.upgrades[insightUpgrade.index]
+      gameState.upgrades[i],
+      gameState.upgrades[insightUpgrade.index]
     );
   }
 }
 
-function addUpgradeXP(upgrade) {
+function addUpgradeXP(upgrade, gameState) {
   let xpToAdd = upgrade.currentXPRate / GAME_LOOP_PER_SECOND;
-  if (state.testMode) {
+  if (gameState.testMode) {
     xpToAdd *= 50; // TODO: Remove before production
   }
   upgrade.currentXPInvested += xpToAdd;
   if (upgrade.currentXPInvested >= upgrade.currentXPCost) {
-    levelUpUpgrade(upgrade, "XP");
+    // Level up XP
+    upgrade.XPLevel += 1;
+    upgrade.currentXPInvested = 0;
+    upgrade.currentXPCost = Math.round(
+      upgrade.currentXPCost +
+        upgrade.baseXPCost *
+          upgrade.currentXPCostIncrease ** Math.max(1, upgrade.XPLevel - 1)
+    );
+    
+    // Recalculate effect using upgrade class
+    const upgradeTemplate = upgradeRegistry.getUpgradeByName(upgrade.name);
+    const upgradeInstance = Object.create(Object.getPrototypeOf(upgradeTemplate));
+    Object.assign(upgradeInstance, upgradeTemplate, upgrade);
+    upgrade.currentEffectSize = upgradeInstance.calculateEffect();
+    if (upgrade.shouldReverse === true) {
+      upgrade.currentEffectSize = 1 / upgrade.currentEffectSize;
+    }
   }
 }
 
@@ -29,36 +44,14 @@ function calculateUpgradeCost(upgrade, insight) {
   let insightMagnitude = 1;
   if (insight.chiLevel > 0) {
     // Copy state to insight upgrade class and calculate effect
-    Object.assign(insightUpgrade, insight);
-    insightMagnitude = insightUpgrade.calculateEffect();
-    insight.currentEffectSize = insightUpgrade.currentEffectSize;
+    const insightUpgradeTemplate = upgradeRegistry.getUpgradeByName("Insight");
+    const insightUpgradeInstance = Object.create(Object.getPrototypeOf(insightUpgradeTemplate));
+    Object.assign(insightUpgradeInstance, insightUpgradeTemplate, insight);
+    insightMagnitude = insightUpgradeInstance.calculateEffect();
+    insight.currentEffectSize = insightUpgradeInstance.currentEffectSize;
   }
   upgrade.currentChiCost = currentChiCost * (1 / insightMagnitude);
 }
 
-export function levelUpUpgrade(upgrade, source) {
-  if (source === "XP") {
-    upgrade.XPLevel += 1;
-    upgrade.currentXPInvested = 0;
-    upgrade.currentXPCost = Math.round(
-      upgrade.currentXPCost +
-        upgrade.baseXPCost *
-          upgrade.currentXPCostIncrease ** Math.max(1, upgrade.XPLevel - 1)
-    );
-  }
-  if (source === "chi") {
-    upgrade.chiLevel += 1;
-    state.resources.chi.currentChi -= upgrade.currentChiCost;
-    if (upgrade.currentXPRate === 0) {
-      upgrade.currentXPRate = upgrade.baseXPRate;
-    }
-  }
-
-  // Use the upgrade class to calculate effect
-  const upgradeClass = upgradeRegistry.getUpgradeByIndex(upgrade.index);
-  Object.assign(upgradeClass, upgrade);
-  upgrade.currentEffectSize = upgradeClass.calculateEffect();
-  if (upgrade.shouldReverse === true) {
-    upgrade.currentEffectSize = 1 / upgrade.currentEffectSize;
-  }
-}
+// Note: levelUpUpgrade is now handled by the React component for chi leveling
+// XP leveling is handled directly in addUpgradeXP function

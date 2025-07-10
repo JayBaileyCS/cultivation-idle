@@ -1,8 +1,7 @@
-import { calculateAdvancement } from "../backend/advancement";
 import { Canvas, drawCircle } from "../helpers";
 import { stageValues } from "../backend/state/stages";
 import { displayNumber } from "../helpers/numberDisplay";
-import { amplificationUpgrade } from "../backend/state/upgrades";
+import { upgradeRegistry } from "../backend/upgrades/UpgradeRegistry";
 import { state } from "../backend/state/state";
 
 const CHI_ORB_RADIUS = 45;
@@ -31,7 +30,7 @@ export function ChiDisplay(props) {
       </div>
       <div className="advancementButton">
         {shouldShowAdvancement(props) ? (
-          <AdvancementButton chi={props.chi} advancement={props.advancement} />
+          <AdvancementButton chi={props.chi} advancement={props.advancement} onAdvancement={props.onAdvancement} />
         ) : (
           <DisabledAdvancementButton chi={props.chi} />
         )}
@@ -67,7 +66,7 @@ function AdvancementButton(props) {
     <button
       className="advancementButton"
       title={ADVANCEMENT_TOOLTIP}
-      onClick={() => calculateAdvancement(props.advancement)}
+      onClick={props.onAdvancement}
     >
       Advance
     </button>
@@ -85,25 +84,31 @@ function DisabledAdvancementButton(props) {
 function displayTimeToAdvance(currentChi, maxChi, chiPerSecond) {
   // Account for Cycling upgrade's variable effect
   let adjustedChiPerSecond = chiPerSecond;
+  let cyclingUpgrade = upgradeRegistry.getUpgradeByName("Cycling")
   
   // Check if Cycling upgrade is active
-  const cyclingState = state.upgrades[amplificationUpgrade.index];
+  const cyclingState = state.upgrades[cyclingUpgrade.index];
   if (cyclingState.chiLevel > 0) {
     // Copy current state to cycling upgrade
-    Object.assign(amplificationUpgrade, cyclingState);
+    Object.assign(cyclingUpgrade, cyclingState);
     
     // Calculate current cycling effect
-    const currentCyclingEffect = amplificationUpgrade.calculateEffect();
+    const currentCyclingEffect = cyclingUpgrade.calculateEffect(currentChi, maxChi);
     
     // Calculate cycling effect at midpoint (currentChi + maxChi / 2)
     const midpointChi = currentChi + (maxChi - currentChi) / 2;
-    const midpointCyclingEffect = amplificationUpgrade.calculateEffectForDisplay(midpointChi, maxChi);
+    const midpointCyclingEffect = cyclingUpgrade.calculateEffect(midpointChi, maxChi);
     
     // Adjust chiPerSecond based on the ratio between current and midpoint effects
     adjustedChiPerSecond = (chiPerSecond / currentCyclingEffect) * midpointCyclingEffect;
   }
   
   let seconds = (maxChi - currentChi) / adjustedChiPerSecond;
+  return displayTime(seconds)
+}
+
+
+function displayTime(seconds) {
   let timeToMax = "";
   if (seconds > 1000000) {
     return "A long time ";

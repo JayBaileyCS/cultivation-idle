@@ -1,10 +1,8 @@
-import {
-  MeditationUpgrade,
-  LearningUpgrade,
-  CyclingUpgrade,
-  InsightUpgrade,
-  ReinforcementUpgrade,
-} from "./index";
+import { MeditationUpgrade } from "./MeditationUpgrade";
+import { LearningUpgrade } from "./LearningUpgrade";
+import { CyclingUpgrade } from "./CyclingUpgrade";
+import { InsightUpgrade } from "./InsightUpgrade";
+import { ReinforcementUpgrade } from "./ReinforcementUpgrade";
 
 // Create all upgrade instances
 const upgradeInstances = [
@@ -28,11 +26,6 @@ export class UpgradeRegistry {
   // Get upgrades by resource type
   getUpgradesByResourceType(resourceType) {
     return this.upgrades.filter(upgrade => upgrade.resourceType === resourceType);
-  }
-
-  // Get upgrade by index
-  getUpgradeByIndex(index) {
-    return this.upgrades[index];
   }
 
   // Get upgrade by name

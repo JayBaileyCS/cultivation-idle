@@ -1,5 +1,4 @@
 import { BaseUpgrade } from "./BaseUpgrade";
-import { state } from "../state/state";
 
 export class CyclingUpgrade extends BaseUpgrade {
   constructor() {
@@ -30,27 +29,19 @@ export class CyclingUpgrade extends BaseUpgrade {
   }
 
   // Custom effect calculation for cycling (stronger at minimum chi)
-  calculateEffect() {
+  calculateEffect(currentChi, maxChi) {
     if (this.chiLevel > 0) {
-      let chiRatio =
-        (3 - (state.resources.chi.currentChi / state.resources.chi.maxChi) * 2) / 3; // 1 when empty, down to 1/3 when full
+      // Use passed chi values or fallback to default ratio
+      let chiRatio = 1;
+      if (currentChi !== undefined && maxChi !== undefined) {
+        chiRatio = (3 - (currentChi / maxChi) * 2) / 3; // 1 when empty, down to 1/3 when full
+      }
       let currentMagnitude = this.calculateEffectSize();
       this.currentEffectSize = 1 + (currentMagnitude - 1) * chiRatio;
     }
     return this.currentEffectSize;
   }
-
-  // Calculate effect for display purposes with custom chi values
-  calculateEffectForDisplay(currentChi, maxChi) {
-    if (this.chiLevel > 0) {
-      let chiRatio = (3 - (currentChi / maxChi) * 2) / 3; // 1 when empty, down to 1/3 when full
-      let currentMagnitude = this.calculateEffectSize();
-      return 1 + (currentMagnitude - 1) * chiRatio;
-    }
-    return 1;
-  }
-
-  applyEffect(baseValue) {
-    return baseValue * this.calculateEffect();
+  applyEffect(baseValue, currentChi, maxChi) {
+    return baseValue * this.calculateEffect(currentChi, maxChi);
   }
 }

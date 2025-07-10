@@ -1,8 +1,6 @@
 import { Canvas, drawRectangle } from "../../../helpers";
-import { state } from "../../../backend/state/state";
 import { NOT_YET_UNLOCKED_TOOLTIP } from "../../../constants";
 import { stageValues } from "../../../backend/state/stages";
-import { levelUpUpgrade } from "../../../backend/addUpgrades";
 import "./upgradeBox.css";
 import { displayNumber } from "../../../helpers/numberDisplay";
 
@@ -32,8 +30,8 @@ export function UpgradeBox(props) {
           Chi Cost: {displayNumber(upgrade.currentChiCost, true)}
         </div>
         <div className="upgradeLevelUpBtn">
-          {shouldAllowLevelUp(upgrade) ? (
-            <UpgradeLevelUpButton upgrade={upgrade} />
+          {shouldAllowLevelUp(upgrade, props.gameState) ? (
+            <UpgradeLevelUpButton upgrade={upgrade} onUpgradeLevelUp={props.onUpgradeLevelUp} />
           ) : (
             <DisabledUpgradeLevelUpButton />
           )}
@@ -106,7 +104,7 @@ function UpgradeLevelUpButton(props) {
   return (
     <button
       className="upgradeLevelUpButton"
-      onClick={() => levelUpUpgrade(props.upgrade, "chi")}
+      onClick={() => props.onUpgradeLevelUp(props.upgrade.index)}
     >
       {"+"}
     </button>
@@ -127,17 +125,17 @@ function getChiEffectSize(upgrade) {
   return upgrade.shouldReverse ? 1 / chiEffectSize : chiEffectSize;
 }
 
-function shouldAllowLevelUp(upgrade) {
+function shouldAllowLevelUp(upgrade, gameState) {
   return (
-    state.resources.chi.currentChi >= upgrade.currentChiCost &&
-    isUnlocked(upgrade)
+    gameState.resources.chi.currentChi >= upgrade.currentChiCost &&
+    isUnlocked(upgrade, gameState)
   );
 }
 
-export function isUnlocked(upgrade) {
+export function isUnlocked(upgrade, gameState) {
   return (
-    state.advancement.stage > upgrade.stageRequired ||
-    (state.advancement.stage >= upgrade.stageRequired &&
-      state.advancement.level >= upgrade.advancementLevelRequired)
+    gameState.advancement.stage > upgrade.stageRequired ||
+    (gameState.advancement.stage >= upgrade.stageRequired &&
+      gameState.advancement.level >= upgrade.advancementLevelRequired)
   );
 }

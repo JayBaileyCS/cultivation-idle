@@ -1,6 +1,6 @@
-import { state } from "../backend/state/state";
 import { NOT_YET_UNLOCKED_TOOLTIP } from "../constants";
 import { stageValues } from "../backend/state/stages";
+import { SaveControls } from "./saveControls";
 
 const CURRENT_AREA_TOOLTIP = "Explore the current area.";
 const CULTIVATION_TOOLTIP = "Improve your cultivation.";
@@ -14,7 +14,7 @@ export function FeatureMenu(props) {
         <MenuButton
           text="Current Area"
           title={CURRENT_AREA_TOOLTIP}
-          onClick={() => swapMainArea("currentArea")}
+          onClick={() => props.onAreaSwap("currentArea")}
         />
       </div>
       <div className="cultivateButton">
@@ -22,7 +22,7 @@ export function FeatureMenu(props) {
           <MenuButton
             text="Cultivation"
             title={CULTIVATION_TOOLTIP}
-            onClick={() => swapMainArea("cultivation")}
+            onClick={() => props.onAreaSwap("cultivation")}
           />
         ) : (
           <DisabledMenuButton text={createRequiresAdvancementText(1, 2)} />
@@ -33,7 +33,7 @@ export function FeatureMenu(props) {
           <MenuButton
             text="Not Yet Implemented"
             title={FEATURE_THREE_TOOLTIP}
-            onClick={() => swapMainArea("featureThree")}
+            onClick={() => props.onAreaSwap("featureThree")}
           />
         ) : (
           <DisabledMenuButton text={createRequiresAdvancementText(2, 1)} />
@@ -45,6 +45,13 @@ export function FeatureMenu(props) {
         ) : (
           <DisabledMenuButton text={createRequiresAdvancementText(2, 2)} />
         )}
+      </div>
+      <div className="saveControlsContainer">
+        <SaveControls 
+          onExportSave={props.onExportSave}
+          onImportSave={props.onImportSave}
+          onClearSave={props.onClearSave}
+        />
       </div>
     </div>
   );
@@ -66,10 +73,6 @@ function DisabledMenuButton(props) {
   );
 }
 
-function swapMainArea(screen) {
-  state.mainArea = screen;
-  return;
-}
 
 function shouldShowMenuButton(advancement, requiredStage, requiredLevel) {
   return (

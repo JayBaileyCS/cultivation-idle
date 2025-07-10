@@ -101,15 +101,20 @@ function serializeState(state) {
 }
 
 function deserializeState(savedData) {
-  // Recreate upgrade instances from registry
-  const upgrades = upgradeRegistry.getAllUpgrades();
+  const registryUpgrades = upgradeRegistry.getAllUpgrades();
   
-  // Apply saved data to upgrade instances
-  upgrades.forEach((upgrade, index) => {
-    const savedUpgrade = savedData.upgrades[index];
+  // Create fresh upgrade instances with saved data
+  const upgrades = registryUpgrades.map((upgradeTemplate, index) => {
+    const savedUpgrade = savedData.upgrades?.[index];
+    // Always create a fresh instance from the constructor
+    const upgradeClass = upgradeTemplate.constructor;
+    const freshUpgrade = new upgradeClass();
+    
     if (savedUpgrade) {
-      Object.assign(upgrade, savedUpgrade);
+      // Apply saved data to the fresh instance
+      return Object.assign(freshUpgrade, savedUpgrade);
     }
+    return freshUpgrade;
   });
   
   return {

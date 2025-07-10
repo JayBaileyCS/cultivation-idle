@@ -1,34 +1,41 @@
 import { GAME_LOOP_PER_SECOND } from "../constants";
 import { stageValues } from "./state/stages";
-import { state } from "./state/state";
 import { upgradeRegistry } from "./upgrades";
 
-export function addResources(state) {
-  let stageValue = stageValues[state.advancement.stage - 1];
-  calculateChi(stageValue);
-  calculateXP(state.upgrades);
-  state.resources.chi.currentChi = addChi(state.resources.chi);
-  return state;
+export function addResources(gameState) {
+  let stageValue = stageValues[gameState.advancement.stage - 1];
+  calculateChi(gameState, stageValue);
+  calculateXP(gameState, gameState.upgrades);
+  gameState.resources.chi.currentChi = addChi(gameState.resources.chi, gameState);
+  return gameState;
 }
 
-function calculateChi(stageValue) {
-  state.resources.chi.chiPerSecond = calculateChiPerSecond(stageValue);
-  state.resources.chi.maxChi = calculateMaxChi(stageValue);
+function calculateChi(gameState, stageValue) {
+  gameState.resources.chi.chiPerSecond = calculateChiPerSecond(gameState, stageValue);
+  gameState.resources.chi.maxChi = calculateMaxChi(gameState, stageValue);
 }
 
-function calculateChiPerSecond(stageValue) {
+function calculateChiPerSecond(gameState, stageValue) {
   let chiPerSecond =
     stageValue.baseChiPerSecond *
-    stageValue.baseChiPerSecondIncrease ** (state.advancement.level - 1);
+    stageValue.baseChiPerSecondIncrease ** (gameState.advancement.level - 1);
   
   // Apply all chi-affecting upgrades
   const chiUpgrades = upgradeRegistry.getUpgradesByResourceType("chi");
-  for (const upgrade of chiUpgrades) {
-    const upgradeState = state.upgrades[upgrade.index];
+  for (const upgradeTemplate of chiUpgrades) {
+    const upgradeState = gameState.upgrades[upgradeTemplate.index];
     if (upgradeState.chiLevel > 0) {
-      // Copy current state to the upgrade class instance
-      Object.assign(upgrade, upgradeState);
-      chiPerSecond = upgrade.applyEffect(chiPerSecond);
+      // Create a fresh upgrade instance to avoid modifying the global template
+      const upgradeClass = upgradeRegistry.getUpgradeByName(upgradeTemplate.name);
+      const upgrade = Object.create(Object.getPrototypeOf(upgradeClass));
+      Object.assign(upgrade, upgradeClass, upgradeState);
+      
+      // Pass chi values for upgrades that need them (like CyclingUpgrade)
+      if (upgrade.name === "Cycling") {
+        chiPerSecond = upgrade.applyEffect(chiPerSecond, gameState.resources.chi.currentChi, gameState.resources.chi.maxChi);
+      } else {
+        chiPerSecond = upgrade.applyEffect(chiPerSecond);
+      }
       // Copy calculated effect back to state
       upgradeState.currentEffectSize = upgrade.currentEffectSize;
     }
@@ -38,42 +45,44 @@ function calculateChiPerSecond(stageValue) {
 }
 
 
-function calculateMaxChi(stageValue) {
+function calculateMaxChi(gameState, stageValue) {
   return (
     stageValue.baseMaxChi *
-    stageValue.baseMaxChiIncrease ** (state.advancement.level - 1)
+    stageValue.baseMaxChiIncrease ** (gameState.advancement.level - 1)
   );
 }
 
-function calculateXP(upgrades) {
+function calculateXP(gameState, upgrades) {
   // Get XP-affecting upgrades
   const xpUpgrades = upgradeRegistry.getUpgradesByResourceType("xp");
   const learningUpgrade = xpUpgrades.find(u => u.name === "Learning");
   const reinforcementUpgrade = xpUpgrades.find(u => u.name === "Reinforcement");
   
   // Calculate learning rate
-  const learningState = state.upgrades[learningUpgrade.index];
-  Object.assign(learningUpgrade, learningState);
-  let learningRate = learningUpgrade.calculateEffect();
-  learningState.currentEffectSize = learningUpgrade.currentEffectSize;
+  const learningState = gameState.upgrades[learningUpgrade.index];
+  const learningInstance = Object.create(Object.getPrototypeOf(learningUpgrade));
+  Object.assign(learningInstance, learningUpgrade, learningState);
+  let learningRate = learningInstance.calculateEffect();
+  learningState.currentEffectSize = learningInstance.currentEffectSize;
   
   // Calculate reinforcement and apply to all upgrades
-  const reinforcementState = state.upgrades[reinforcementUpgrade.index];
-  Object.assign(reinforcementUpgrade, reinforcementState);
+  const reinforcementState = gameState.upgrades[reinforcementUpgrade.index];
+  const reinforcementInstance = Object.create(Object.getPrototypeOf(reinforcementUpgrade));
+  Object.assign(reinforcementInstance, reinforcementUpgrade, reinforcementState);
   
   for (let i = 0; i < upgrades.length; i++) {
     if (upgrades[i].chiLevel > 0) {
       let baseRate = upgrades[i].baseXPRate * learningRate;
-      upgrades[i].currentXPRate = reinforcementUpgrade.applyReinforcementEffect(baseRate, upgrades[i].chiLevel);
+      upgrades[i].currentXPRate = reinforcementInstance.applyReinforcementEffect(baseRate, upgrades[i].chiLevel);
     }
   }
   
-  reinforcementState.currentEffectSize = reinforcementUpgrade.currentEffectSize;
+  reinforcementState.currentEffectSize = reinforcementInstance.currentEffectSize;
 }
 
-function addChi(chi) {
-  let chiToAdd = (chi.chiPerSecond + 3) / GAME_LOOP_PER_SECOND; // TODO: Remove +3 when early game mechanic added.
-  if (state.testMode) {
+function addChi(chi, gameState) {
+  let chiToAdd = chi.chiPerSecond / GAME_LOOP_PER_SECOND;
+  if (gameState.testMode) {
     chiToAdd *= 100; // TODO: Remove before production
   }
   return Math.min(chi.maxChi, chi.currentChi + chiToAdd);
