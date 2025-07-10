@@ -49,9 +49,27 @@ export function UpgradeBox(props) {
 }
 
 function UpgradeBar(props) {
+  // Calculate responsive font size based on text length
+  const xpText = `${displayNumber(props.currentXP, true)} / ${displayNumber(props.currentXPCost, true)} XP (${displayNumber(props.currentXPRate, false)}/s)`;
+  const getResponsiveFontSize = (text) => {
+    const baseLength = 20; // Approximate character count that fits comfortably
+    const maxFontSize = 1; // Current font size (1em)
+    const minFontSize = 0.9; // Minimum font size
+    
+    if (text.length <= baseLength) {
+      return maxFontSize;
+    }
+    
+    // Calculate scale factor based on text length
+    const scaleFactor = baseLength / text.length;
+    return Math.max(minFontSize, maxFontSize * scaleFactor);
+  };
+
+  const fontSize = getResponsiveFontSize(xpText);
+
   return (
     <div>
-      <div className="upgradeBarText">
+      <div className="upgradeBarText" style={{ fontSize: `${fontSize}em` }}>
         {displayNumber(props.currentXP, true)} /{" "}
         {displayNumber(props.currentXPCost, true)} XP (
         {displayNumber(props.currentXPRate, false)}/s)

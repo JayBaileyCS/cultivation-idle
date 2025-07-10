@@ -142,6 +142,13 @@ class Game extends React.Component {
     }));
   };
 
+  handleToggleTestMode = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      testMode: !prevState.testMode
+    }));
+  };
+
   updateGameState = () => {
     this.setState(prevState => {
       // Create a new state object with updates
@@ -173,6 +180,8 @@ class Game extends React.Component {
             chi={this.state.resources.chi}
             advancement={this.state.advancement}
             onAdvancement={this.handleAdvancement}
+            testMode={this.state.testMode}
+            onToggleTestMode={this.handleToggleTestMode}
           />
         </div>
       </div>

@@ -35,6 +35,9 @@ export function ChiDisplay(props) {
           <DisabledAdvancementButton chi={props.chi} />
         )}
       </div>
+      <div className="testModeButton">
+        <TestModeButton testMode={props.testMode} onToggleTestMode={props.onToggleTestMode} />
+      </div>
     </div>
   );
 }
@@ -77,6 +80,18 @@ function DisabledAdvancementButton(props) {
   return (
     <button className="disabledAdvancementButton" title={ADVANCEMENT_TOOLTIP}>
       Advance
+    </button>
+  );
+}
+
+function TestModeButton(props) {
+  return (
+    <button 
+      className={props.testMode ? "testButton active" : "testButton"} 
+      onClick={props.onToggleTestMode} 
+      title="Toggle test mode (vastly increases chi and XP gain)"
+    >
+      {props.testMode ? "Test: ON" : "Test: OFF"}
     </button>
   );
 }
