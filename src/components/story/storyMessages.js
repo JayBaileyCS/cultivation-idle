@@ -1,0 +1,8 @@
+export const storyMessages = {
+  Advancement: {
+    "Chi Gathering": {
+      2: "Level 2",
+      3: "Level 3"
+    }
+  }
+};

@@ -11,6 +11,8 @@ import { addUpgrades } from "./backend/addUpgrades";
 import { GAME_LOOP_PER_SECOND } from "./constants";
 import { saveGameState, loadGameState, importSaveData, clearSaveData, downloadSaveFile } from "./backend/saveSystem";
 import { upgradeRegistry } from "./backend/upgrades";
+import { loadStoryMessages } from "./components/story/storyLoader";
+import { calculateAdvancement } from "./backend/advancement";
 
 class Game extends React.Component {
   constructor(props) {
@@ -19,7 +21,10 @@ class Game extends React.Component {
     this.state = savedState || state;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    // Load story messages
+    await loadStoryMessages();
+    
     this.gameInterval = setInterval(() => {
       this.updateGameState();
     }, 1000 / GAME_LOOP_PER_SECOND);
@@ -94,14 +99,11 @@ class Game extends React.Component {
   handleAdvancement = () => {
     this.setState(prevState => {
       const newState = { ...prevState };
-      if (newState.advancement.level < 9) {
-        newState.advancement.level = newState.advancement.level + 1;
-      } else {
-        newState.advancement.level = 1;
-        newState.advancement.stage += 1;
-      }
-      newState.resources.chi.currentChi = 0;
-      return newState;
+      // Update the global state for calculateAdvancement to work with
+      Object.assign(state, newState);
+      calculateAdvancement(newState.advancement);
+      // Return the updated state
+      return { ...state };
     });
   };
 
