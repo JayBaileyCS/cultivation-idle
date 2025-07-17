@@ -13,7 +13,7 @@ export class ReinforcementUpgrade extends BaseUpgrade {
       currentXPInvested: 0,
       baseXPRate: 1,
       currentXPRate: 0,
-      currentXPCostIncrease: 1.1,
+      currentXPCostIncrease: 1.15,
       currentXPCost: 70,
       baseXPCost: 70,
       currentChiCost: 150,

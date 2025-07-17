@@ -13,6 +13,7 @@ import { saveGameState, loadGameState, importSaveData, clearSaveData, downloadSa
 import { upgradeRegistry } from "./backend/upgrades";
 import { loadStoryMessages } from "./components/story/storyLoader";
 import { calculateAdvancement } from "./backend/advancement";
+import { chiGathering } from "./backend/state/stages"
 
 class Game extends React.Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class Game extends React.Component {
     
     const initialState = {
       resources: {
-        chi: { currentChi: 80, chiPerSecond: 2, maxChi: 100 },
+        chi: { currentChi: 50, chiPerSecond: chiGathering.baseChiPerSecond, maxChi: chiGathering.baseMaxChi },
       },
       advancement: { stage: 1, level: 1 },
       mainArea: "currentArea",

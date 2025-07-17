@@ -3,6 +3,7 @@ import { LearningUpgrade } from "./LearningUpgrade";
 import { CyclingUpgrade } from "./CyclingUpgrade";
 import { InsightUpgrade } from "./InsightUpgrade";
 import { ReinforcementUpgrade } from "./ReinforcementUpgrade";
+import { FilteringUpgrade } from "./FilteringUpgrade";
 
 // Create all upgrade instances
 const upgradeInstances = [
@@ -11,6 +12,7 @@ const upgradeInstances = [
   new CyclingUpgrade(),
   new InsightUpgrade(),
   new ReinforcementUpgrade(),
+  new FilteringUpgrade(),
 ];
 
 export class UpgradeRegistry {

@@ -60,7 +60,7 @@ export function StoryDisplay() {
         <div 
             ref={scrollRef}
             style={{
-                height: '300px',
+                height: '550px',
                 overflowY: 'auto',
                 border: '1px solid #ccc',
                 padding: '10px',
@@ -69,7 +69,7 @@ export function StoryDisplay() {
         >
             {messages.map(message => (
                 <div key={message.id} style={{ marginBottom: '8px' }}>
-                    <div style={{ fontSize: '14px', color: '#333' }}>
+                    <div style={{ fontSize: '14px', color: '#333', whiteSpace: 'pre-wrap' }}>
                         {message.text}
                     </div>
                     <div style={{ fontSize: '10px', color: '#666', marginTop: '2px' }}>
