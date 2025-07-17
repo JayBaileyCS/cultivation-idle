@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { importSaveData } from "../backend/saveSystem";
 
 export function SaveControls({ onExportSave, onImportSave, onClearSave }) {
   const [importMessage, setImportMessage] = useState("");

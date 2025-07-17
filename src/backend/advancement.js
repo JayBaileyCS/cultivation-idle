@@ -24,7 +24,6 @@ export function calculateAdvancement(advancement) {
   });
   
   const storyMessages = getStoryMessages();
-  console.log('Story messages loaded:', storyMessages);
   
   if (currentStageName && storyMessages.Advancement?.[currentStageName]?.[currentLevel]) {
     const message = storyMessages.Advancement[currentStageName][currentLevel];

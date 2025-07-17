@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { storyMessages } from './storyMessages';
 
 class StoryManager {
     constructor() {
         this.messages = [{
             id: 1,
-            text: "You are not a cultivator.\n\nFor fifteen years, you have lived as a farmer in the Valley of Wei.",
+            text: storyMessages['Advancement']['Chi Gathering'][1],
             timestamp: new Date()
         }];
         this.listeners = new Set();
