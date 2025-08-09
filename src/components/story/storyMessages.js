@@ -24,12 +24,12 @@ export const storyMessages = {
       5: {
         category: "Advancement",
         desc: "Chi Gathering 5",
-        text: "Your chi is growing denser, brighter, and cleaner. The same motions that were made when you first started can now be made over and over again, refining your body just a little more each time. Every day, you gain a little more out of these exercises, and you find that even the simplest breathing exercises have a depth that seems unending. Truly, one could spend a lifetime just studying the most basic patterns, and still have barely begun to learn."
+        text: "You're starting to notice the benefit, now. Your skin is clearer, you can run faster, and logs that used to take all your strength to drag to the fire are now merely difficult. Though you are still very much mortal, as you were starkly reminded of when you stumbled upon a moon bear in the forest. You backed away slowly, and carefully, knowing you stood no chance against such a beast, let alone the spirit beasts of the wilds. At some point, you should probably train your martial skills as well - but without the Foundation stage, you can never learn the chi-infused techniques a true cultivator uses. Until then, you're just preparing for that day. And yet, time waits for nobody, especially cultivators. Your body remains strong, despite your age - but how far can you advance, how far can you run, before age catches up with you?"
       },
       6: {
         category: "Advancement",
         desc: "Chi Gathering 6",
-        text: "You're starting to notice the benefit, now. Your skin is clearer, you can run faster, and logs that used to take all your strength to drag to the fire are now merely difficult. Though you are still very much mortal, as you were starkly reminded of when you stumbled upon a moon bear in the forest. You backed away slowly, and carefully, knowing you stood no chance against such a beast, let alone the spirit beasts of the wilds. At some point, you should probably train your martial skills as well - but without the Foundation stage, you can never learn the chi-infused techniques a true cultivator uses. Until then, you're just preparing for that day. And yet, time waits for nobody, especially cultivators. Your body remains strong, despite your age - but how far can you advance, how far can you run, before age catches up with you?"
+        text: "Your chi is growing denser, brighter, and cleaner. The same motions that were made when you first started can now be made over and over again, refining your body just a little more each time. Every day, you gain a little more out of these exercises, and you find that even the simplest breathing exercises have a depth that seems unending. Truly, one could spend a lifetime just studying the most basic patterns, and still have barely begun to learn."
       },
       7: {
         category: "Advancement",
@@ -57,7 +57,7 @@ export const storyMessages = {
       2: {
         category: "Advancement",
         desc: "Foundation 2",
-        text: "You have learned to adapt to your new elemental potential, but it hasn't gotten you any closer to actually being able to fight. Going over your manuals again, you realise that using your chi to empower yourself is more than mere metaphor - to train your body to deal and withstand blows, you'll need to infuse your body with sufficient quantities. An entirely new method of progression awaits you."
+        text: "You have learned to adapt to your new elemental potential, but it hasn't gotten you any closer to actually being able to fight. Going over your manuals again, you realise that using your chi to empower yourself is more than mere metaphor - to train your body to deal and withstand blows, you'll need to infuse your body with sufficient quantities. An entirely new method of progression awaits you, and with this, you can finally overcome the dangers of the wilds, and make your way towards civilisation for the first time in decades."
       }
     }
   };
