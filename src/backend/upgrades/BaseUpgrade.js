@@ -1,3 +1,4 @@
+import { displayNumber } from "../../helpers/numberDisplay";
 
 export class BaseUpgrade {
   constructor(upgradeData) {
@@ -22,5 +23,10 @@ export class BaseUpgrade {
   // Default effect calculation - override in subclasses
   applyEffect(baseValue) {
     return baseValue * this.calculateEffect();
+  }
+
+  displayEffect() {
+    return "x" + displayNumber(this.shouldReverse ? 1 / this.calculateEffect() : this.calculateEffect(), false) + " " +
+           this.effectText;
   }
 }

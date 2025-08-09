@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { storyMessages } from './storyMessages';
 
 class StoryManager {
     constructor() {
         this.messages = [{
             id: 1,
-            text: storyMessages['Advancement']['Chi Gathering'][1],
+            category: "Advancement",
+            desc: "Chi Gathering 1",
+            text: storyMessages['Advancement']['Chi Gathering'][1].text,
             timestamp: new Date()
         }];
         this.listeners = new Set();
@@ -14,7 +17,9 @@ class StoryManager {
     addMessage(message) {
         this.messages.push({
             id: Date.now() + Math.random(),
-            text: message,
+            category: message.category,
+            desc: message.desc,
+            text: message.text,
             timestamp: new Date()
         });
         this.notifyListeners();
@@ -69,8 +74,10 @@ export function StoryDisplay() {
         >
             {messages.map(message => (
                 <div key={message.id} style={{ marginBottom: '8px' }}>
-                    <div style={{ fontSize: '14px', color: '#333', whiteSpace: 'pre-wrap' }}>
-                        {message.text}
+                    <div style={{ fontSize: '14px', color: '#333' }}>
+                        <ReactMarkdown>
+                            {`**${message.desc}:** ${message.text}`}
+                        </ReactMarkdown>
                     </div>
                     <div style={{ fontSize: '10px', color: '#666', marginTop: '2px' }}>
                         {message.timestamp.toLocaleTimeString()}

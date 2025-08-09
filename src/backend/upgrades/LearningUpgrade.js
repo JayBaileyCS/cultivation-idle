@@ -27,9 +27,4 @@ export class LearningUpgrade extends BaseUpgrade {
         "By studying cultivation texts, a cultivator can improve the rate at which they improve at various essential skills.\n\nIncreases XP generation by 15% per level.\nMultiplies by 30% when chi is added.",
     });
   }
-
-  // Simple multiplication effect for learning
-  applyEffect(baseValue) {
-    return baseValue * this.calculateEffect();
-  }
 }

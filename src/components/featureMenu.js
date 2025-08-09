@@ -2,19 +2,23 @@ import { NOT_YET_UNLOCKED_TOOLTIP } from "../constants";
 import { stageValues } from "../backend/state/stages";
 import { SaveControls } from "./saveControls";
 
-const CURRENT_AREA_TOOLTIP = "Explore the current area.";
+const STORY_TOOLTIP = "Read the story of your journey.";
 const CULTIVATION_TOOLTIP = "Improve your cultivation.";
-const FEATURE_THREE_TOOLTIP = "This feature is not yet implemented.";
+const ELEMENTAL_TOOLTIP = "This feature is not yet implemented.";
+const MAP_TOOLTIP = "This feature is not yet implemented.";
+const COMBAT_TOOLTIP = "This feature is not yet implemented.";
+const PROFESSION_TOOLTIP = "This feature is not yet implemented.";
+const SECT_TOOLTIP = "This feature is not yet implemented";
 
 export function FeatureMenu(props) {
   // Shows the possible features in the upper-left as a series of buttons.
   return (
     <div className="featureMenu">
-      <div className="currentAreaButton">
+      <div className="storyButton">
         <MenuButton
-          text="Current Area"
-          title={CURRENT_AREA_TOOLTIP}
-          onClick={() => props.onAreaSwap("currentArea")}
+          text="Story"
+          title={STORY_TOOLTIP}
+          onClick={() => props.onAreaSwap("story")}
         />
       </div>
       <div className="cultivateButton">
@@ -28,20 +32,57 @@ export function FeatureMenu(props) {
           <DisabledMenuButton text={createRequiresAdvancementText(1, 2)} />
         )}
       </div>
-      <div className="toImplementButton">
+      <div className="elementButton">
         {shouldShowMenuButton(props.advancement, 2, 1) ? (
           <MenuButton
-            text="Not Yet Implemented"
-            title={FEATURE_THREE_TOOLTIP}
-            onClick={() => props.onAreaSwap("featureThree")}
+            text="Elements (TBD)"
+            title={ELEMENTAL_TOOLTIP}
+            onClick={() => props.onAreaSwap("element")}
           />
         ) : (
           <DisabledMenuButton text={createRequiresAdvancementText(2, 1)} />
         )}
       </div>
-      <div className="toImplementButton2">
+      <div className="mapButton">
+        {shouldShowMenuButton(props.advancement, 2, 1) ? (
+          <MenuButton
+            text="World Map (TBD)"
+            title={MAP_TOOLTIP}
+            onClick={() => props.onAreaSwap("map")}
+          />
+        ) : (
+          <DisabledMenuButton text={createRequiresAdvancementText(2, 1)} />
+        )}
+      </div>
+      <div className="combatButton">
         {shouldShowMenuButton(props.advancement, 2, 2) ? (
-          <MenuButton text="Should Not See This" />
+          <MenuButton 
+            text="Combat (TBD)"
+            title={COMBAT_TOOLTIP}
+            onClick={() => props.onAreaSwap("combat")}
+          />
+        ) : (
+          <DisabledMenuButton text={createRequiresAdvancementText(2, 2)} />
+        )}
+      </div>
+      <div className="professionButton">
+        {shouldShowMenuButton(props.advancement, 3, 1) ? (
+          <MenuButton 
+            text="Professions (TBD)"
+            title={PROFESSION_TOOLTIP}
+            onClick={() => props.onAreaSwap("profession")}
+          />
+        ) : (
+          <DisabledMenuButton text={createRequiresAdvancementText(2, 2)} />
+        )}
+      </div>
+      <div className="professionButton">
+        {shouldShowMenuButton(props.advancement, 3, 1) ? (
+          <MenuButton 
+            text="Sect (TBD)"
+            title={SECT_TOOLTIP}
+            onClick={() => props.onAreaSwap("sect")}
+          />
         ) : (
           <DisabledMenuButton text={createRequiresAdvancementText(2, 2)} />
         )}

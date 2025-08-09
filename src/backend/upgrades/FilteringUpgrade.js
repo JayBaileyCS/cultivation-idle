@@ -1,4 +1,5 @@
 import { BaseUpgrade } from "./BaseUpgrade";
+import { displayNumber } from "../../helpers/numberDisplay";
 
 export class FilteringUpgrade extends BaseUpgrade {
   constructor() {
@@ -31,4 +32,14 @@ export class FilteringUpgrade extends BaseUpgrade {
   applyEffect(baseValue) {
     return baseValue * Math.min(this.calculateEffect(), 100);
   }
+
+  displayEffect() {
+    let effectSize = Math.min(this.calculateEffect(), 100)
+    let text = displayNumber(effectSize, false) + this.effectText;
+    if (effectSize >= 100) {
+      text = text + " [CAP]"
+    }
+    return text
+
+  }  
 }

@@ -82,7 +82,7 @@ class Game extends React.Component {
         chi: { currentChi: 50, chiPerSecond: chiGathering.baseChiPerSecond, maxChi: chiGathering.baseMaxChi },
       },
       advancement: { stage: 1, level: 1 },
-      mainArea: "currentArea",
+      mainArea: "story",
       testMode: false,
       upgrades: freshUpgrades,
     };

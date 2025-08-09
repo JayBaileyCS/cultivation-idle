@@ -1,6 +1,6 @@
 const ONE_THOUSAND = 1000;
 
-const SUFFIXES = ["K", "M", "B", "T"];
+const SUFFIXES = ["K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "De"];
 
 export function displayNumber(number, integerOnly) {
   if (number < ONE_THOUSAND) {

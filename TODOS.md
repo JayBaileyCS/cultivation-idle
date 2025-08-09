@@ -10,7 +10,8 @@ Put story in state
 Create lifespan (Pre-foundation)
 Create map (Foundation 1)
 Create elemental aspect (Foundation 1)
-Create combat (Foundation 1)
+Create dantian capacity (Foundation 1)
+Create combat (Foundation 2)
 Create enlightenment (End of Foundation?)
 
 ### FOR CLAUDE:

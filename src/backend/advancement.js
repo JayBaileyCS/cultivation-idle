@@ -16,20 +16,20 @@ export function calculateAdvancement(advancement) {
   const currentStageName = stageValues[state.advancement.stage - 1]?.name;
   const currentLevel = state.advancement.level;
   
-  console.log('Advancement debug:', {
-    stage: state.advancement.stage,
-    currentStageName,
-    currentLevel,
-    stageValues: stageValues[state.advancement.stage]
-  });
-  
   const storyMessages = getStoryMessages();
   
   if (currentStageName && storyMessages.Advancement?.[currentStageName]?.[currentLevel]) {
     const message = storyMessages.Advancement[currentStageName][currentLevel];
-    console.log('Adding story message:', message);
-    storyManager.addMessage(message);
-  } else {
-    console.log('No story message found for:', currentStageName, currentLevel);
+    
+    // Check if this message already exists
+    const existingMessages = storyManager.getMessages();
+    const messageExists = existingMessages.some(msg => 
+      msg.category === message.category && 
+      msg.desc === message.desc
+    );
+    
+    if (!messageExists) {
+      storyManager.addMessage(message);
+    }
   }
 }

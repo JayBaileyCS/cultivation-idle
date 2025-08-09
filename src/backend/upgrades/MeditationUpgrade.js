@@ -27,9 +27,4 @@ export class MeditationUpgrade extends BaseUpgrade {
         "One of the first skills any new cultivator learns, the cultivator draws in the ambient chi of the universe, separating it into aspects they can use and pulling it into their core.\n\nAdvances chi generation by 15% per level.\nMultiplies by 30% when chi is added.",
     });
   }
-
-  // Simple multiplication effect for meditation
-  applyEffect(baseValue) {
-    return baseValue * this.calculateEffect();
-  }
 }

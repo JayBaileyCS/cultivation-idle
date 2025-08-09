@@ -1,5 +1,6 @@
 import { upgradeRegistry } from "../upgrades";
 import { loadGameState } from "../saveSystem";
+import { storyManager } from "../../components/story/displayStory";
 
 // Default state with fresh upgrade instances
 const createDefaultState = () => {
@@ -13,9 +14,10 @@ const createDefaultState = () => {
       chi: { currentChi: 80, chiPerSecond: 2, maxChi: 100 },
     },
     advancement: { stage: 1, level: 1 },
-    mainArea: "currentArea",
+    mainArea: "story",
     testMode: false, // TODO: Remove before production
     upgrades: freshUpgrades,
+    storyMessages: storyManager.getMessages()
   };
 };
 
